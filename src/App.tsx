@@ -1,11 +1,12 @@
+import { sampleStations } from "./data/sampleStations";
+import { StationList } from "./components/StationList";
+import "./App.css";
+
 function App() {
   return (
-    <main>
+    <main className="app">
       <h1>道の駅一覧</h1>
-      <p>
-        道の駅を探す、地図で見る、自分が行った駅を記録するための Web
-        サービスです。
-      </p>
+      <StationList stations={sampleStations} />
     </main>
   );
 }
