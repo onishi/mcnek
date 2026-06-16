@@ -18,18 +18,32 @@
 
 国土交通省の一覧をマスターデータにし、全国「道の駅」連絡会の情報を詳細情報として突き合わせる。両方に差分がある場合は、まず国土交通省の登録情報を正とし、差分を確認できる管理用レポートを出す。
 
+## ローカル起動手順
+
+```sh
+npm install
+npm run dev
+```
+
+- ブラウザで `http://localhost:5173/` を開く
+- `npm test`: ユニットテスト・コンポーネントテストを実行する
+- `npm run lint`: ESLint でコードをチェックする
+- `npm run format`: Prettier でコードを整形する
+- `npm run format:check`: Prettier の整形チェックのみ行う（CI 向け）
+- `npm run build`: 型チェックと本番ビルドを実行する
+
 ## 開発フェーズ
 
 小さく作って、完了したらチェックを付けて進める。各フェーズは原則 1 つの PR で終わる大きさにする。
 
 ### 0. プロジェクト土台
 
-- [ ] TypeScript / React のプロジェクトを作る
-- [ ] TypeScript strict モードを有効にする
-- [ ] Jest を導入する
-- [ ] lint / format / test の npm scripts を用意する
-- [ ] 空のトップページを表示できるようにする
-- [ ] README にローカル起動手順を書く
+- [x] TypeScript / React のプロジェクトを作る
+- [x] TypeScript strict モードを有効にする
+- [x] Jest を導入する
+- [x] lint / format / test の npm scripts を用意する
+- [x] 空のトップページを表示できるようにする
+- [x] README にローカル起動手順を書く
 
 完了条件:
 
