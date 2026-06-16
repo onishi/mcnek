@@ -52,11 +52,11 @@ npm run dev
 
 ### 1. 道の駅データ型を決める
 
-- [ ] `RoadsideStation` 型を作る
-- [ ] `VisitRecord` 型を作る
-- [ ] 都道府県、地方、登録年月の扱いを決める
-- [ ] サンプル道の駅データを 3 件だけ作る
-- [ ] 型とサンプルデータのユニットテストを作る
+- [x] `RoadsideStation` 型を作る
+- [x] `VisitRecord` 型を作る
+- [x] 都道府県、地方、登録年月の扱いを決める
+- [x] サンプル道の駅データを 3 件だけ作る
+- [x] 型とサンプルデータのユニットテストを作る
 
 完了条件:
 
@@ -235,17 +235,30 @@ npm run dev
 
 - 一覧、詳細、地図、行ったリストの最小機能を公開できる
 
-## 初期データモデル案
+## データモデル
+
+`src/types/roadsideStation.ts` で定義。
 
 ```ts
+type Prefecture = "北海道" | "青森県" | ... ; // 47 都道府県のリテラル型
+type Region =
+  | "北海道地方"
+  | "東北地方"
+  | "関東地方"
+  | "中部地方"
+  | "近畿地方"
+  | "中国地方"
+  | "四国地方"
+  | "九州・沖縄地方";
+
 type RoadsideStation = {
   id: string;
   name: string;
-  prefecture: string;
+  prefecture: Prefecture;
   municipality: string;
   address: string;
   registrationRound: number | null;
-  registrationDate: string | null;
+  registrationDate: string | null; // "YYYY-MM" 形式
   latitude: number | null;
   longitude: number | null;
   mlitSourceUrl: string;
@@ -261,6 +274,11 @@ type VisitRecord = {
   updatedAt: string;
 };
 ```
+
+- 都道府県は 47 件のリテラル型 `Prefecture` で表す（`src/types/roadsideStation.ts`）
+- 地方（`Region`）は `RoadsideStation` のフィールドとして持たず、`prefecture` から `getRegion()`（`src/data/regions.ts`）で導出する。データの重複・不整合を避けるため
+- 登録年月は `"YYYY-MM"` 形式の文字列、または未登録時は `null`
+- サンプルデータ 3 件は `src/data/sampleStations.ts` にある
 
 ## 優先しないこと
 
