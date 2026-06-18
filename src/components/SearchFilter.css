@@ -1,0 +1,34 @@
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.search-filter-query {
+  flex: 1 1 100%;
+  padding: 8px 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.search-filter-select {
+  flex: 1 1 calc(50% - 4px);
+  padding: 8px 10px;
+  font-size: 0.95em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 481px) {
+  .search-filter-query {
+    flex: 1 1 100%;
+  }
+
+  .search-filter-select {
+    flex: 1 1 auto;
+  }
+}
