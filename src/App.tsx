@@ -1,38 +1,15 @@
-import { useMemo, useState } from "react";
-import { sampleStations } from "./data/sampleStations";
-import { StationList } from "./components/StationList";
-import { SearchFilter } from "./components/SearchFilter";
-import { filterStations } from "./lib/filterStations";
-import type { Prefecture, Region } from "./types/roadsideStation";
+import { Route, Routes } from "react-router-dom";
+import { StationListPage } from "./pages/StationListPage";
+import { StationDetailPage } from "./pages/StationDetailPage";
 import "./App.css";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [prefecture, setPrefecture] = useState<Prefecture | "">("");
-  const [region, setRegion] = useState<Region | "">("");
-
-  const filteredStations = useMemo(
-    () =>
-      filterStations(sampleStations, {
-        query,
-        prefecture: prefecture || undefined,
-        region: region || undefined,
-      }),
-    [query, prefecture, region],
-  );
-
   return (
     <main className="app">
-      <h1>道の駅一覧</h1>
-      <SearchFilter
-        query={query}
-        prefecture={prefecture}
-        region={region}
-        onQueryChange={setQuery}
-        onPrefectureChange={setPrefecture}
-        onRegionChange={setRegion}
-      />
-      <StationList stations={filteredStations} />
+      <Routes>
+        <Route path="/" element={<StationListPage />} />
+        <Route path="/stations/:id" element={<StationDetailPage />} />
+      </Routes>
     </main>
   );
 }

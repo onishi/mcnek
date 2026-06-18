@@ -1,0 +1,18 @@
+.station-detail-not-found {
+  color: #777;
+}
+
+.station-detail-info {
+  margin: 0 0 20px;
+}
+
+.station-detail-info dt {
+  font-size: 0.85em;
+  color: #777;
+  margin-top: 12px;
+}
+
+.station-detail-info dd {
+  margin: 2px 0 0;
+  font-size: 1.05em;
+}

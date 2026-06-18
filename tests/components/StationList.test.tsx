@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { StationList } from "../../src/components/StationList";
 import { sampleStations } from "../../src/data/sampleStations";
 import type { RoadsideStation } from "../../src/types/roadsideStation";
@@ -18,46 +19,64 @@ const mockStation: RoadsideStation = {
   updatedAt: "2026-01-01T00:00:00.000Z",
 };
 
+function renderStationList(stations: RoadsideStation[]) {
+  return render(
+    <MemoryRouter>
+      <StationList stations={stations} />
+    </MemoryRouter>,
+  );
+}
+
 test("件数を表示する", () => {
-  render(<StationList stations={sampleStations} />);
+  renderStationList(sampleStations);
   expect(screen.getByText(`${sampleStations.length} 件`)).toBeInTheDocument();
 });
 
 test("各駅の名前を表示する", () => {
-  render(<StationList stations={sampleStations} />);
+  renderStationList(sampleStations);
   for (const station of sampleStations) {
     expect(screen.getByText(station.name)).toBeInTheDocument();
   }
 });
 
 test("各駅の都道府県を表示する", () => {
-  render(<StationList stations={sampleStations} />);
+  renderStationList(sampleStations);
   for (const station of sampleStations) {
     expect(screen.getAllByText(station.prefecture).length).toBeGreaterThan(0);
   }
 });
 
 test("各駅の住所を表示する", () => {
-  render(<StationList stations={sampleStations} />);
+  renderStationList(sampleStations);
   for (const station of sampleStations) {
     expect(screen.getByText(station.address)).toBeInTheDocument();
   }
 });
 
+test("各駅が詳細ページへのリンクになっている", () => {
+  renderStationList(sampleStations);
+  for (const station of sampleStations) {
+    expect(screen.getByText(station.name).closest("a")).toHaveAttribute(
+      "href",
+      `/stations/${station.id}`,
+    );
+  }
+});
+
 test("空の配列では 0 件を表示する", () => {
-  render(<StationList stations={[]} />);
+  renderStationList([]);
   expect(screen.getByText("0 件")).toBeInTheDocument();
 });
 
 test("空の配列では 0 件メッセージを表示する", () => {
-  render(<StationList stations={[]} />);
+  renderStationList([]);
   expect(
     screen.getByText("該当する道の駅が見つかりません"),
   ).toBeInTheDocument();
 });
 
 test("1 件のみのデータでも正しく表示する", () => {
-  render(<StationList stations={[mockStation]} />);
+  renderStationList([mockStation]);
   expect(screen.getByText("1 件")).toBeInTheDocument();
   expect(screen.getByText("テスト道の駅")).toBeInTheDocument();
   expect(screen.getByText("東京都千代田区1-1-1")).toBeInTheDocument();
