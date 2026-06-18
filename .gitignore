@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# 取得スクリプトが保存するXLSのローカルキャッシュ
+data/raw/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
