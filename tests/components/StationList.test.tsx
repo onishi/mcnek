@@ -49,6 +49,13 @@ test("空の配列では 0 件を表示する", () => {
   expect(screen.getByText("0 件")).toBeInTheDocument();
 });
 
+test("空の配列では 0 件メッセージを表示する", () => {
+  render(<StationList stations={[]} />);
+  expect(
+    screen.getByText("該当する道の駅が見つかりません"),
+  ).toBeInTheDocument();
+});
+
 test("1 件のみのデータでも正しく表示する", () => {
   render(<StationList stations={[mockStation]} />);
   expect(screen.getByText("1 件")).toBeInTheDocument();
