@@ -10,12 +10,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "jest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "import:fetch": "tsx src/import/fetchMlitStations.ts",
+    "import:mlit": "tsx src/import/importMlitStations.ts"
   },
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-router-dom": "^7.18.0"
+    "react-router-dom": "^7.18.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
@@ -39,6 +42,7 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "prettier": "^3.8.4",
+    "tsx": "^4.22.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
