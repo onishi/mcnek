@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { sampleStations } from "../data/sampleStations";
+import { roadsideStations } from "../data/stations";
 import "./StationDetailPage.css";
 
 export function StationDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const station = sampleStations.find((s) => s.id === id);
+  const station = roadsideStations.find((s) => s.id === id);
 
   if (!station) {
     return (
