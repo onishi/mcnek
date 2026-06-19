@@ -4,12 +4,13 @@ import "./StationList.css";
 
 type Props = {
   stations: RoadsideStation[];
+  totalCount?: number;
 };
 
-export function StationList({ stations }: Props) {
+export function StationList({ stations, totalCount }: Props) {
   return (
     <section>
-      <p className="station-count">{stations.length} 件</p>
+      <p className="station-count">{totalCount ?? stations.length} 件</p>
       {stations.length === 0 ? (
         <p className="station-empty">該当する道の駅が見つかりません</p>
       ) : (

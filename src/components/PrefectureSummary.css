@@ -1,0 +1,27 @@
+.prefecture-summary {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 7.5em;
+  overflow-y: auto;
+}
+
+.prefecture-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 0.8em;
+  color: #555;
+  background: #fafafa;
+}
+
+.prefecture-summary-count {
+  font-weight: bold;
+  color: #333;
+}
