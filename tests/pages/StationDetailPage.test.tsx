@@ -33,6 +33,24 @@ test("登録年月を表示する", () => {
   expect(screen.getByText(station.registrationDate!)).toBeInTheDocument();
 });
 
+test("国土交通省の参照リンクを表示する", () => {
+  const station = roadsideStations[0];
+  renderDetailPage(station.id);
+  expect(
+    screen.getByRole("link", { name: "国土交通省の一覧を見る" }),
+  ).toHaveAttribute("href", station.mlitSourceUrl);
+});
+
+test("連絡会の詳細URLが未登録の場合はその旨を表示する", () => {
+  const station = roadsideStations.find(
+    (s) => s.associationSourceUrl === null,
+  )!;
+  renderDetailPage(station.id);
+  expect(
+    screen.getByText("全国「道の駅」連絡会の詳細は未登録です"),
+  ).toBeInTheDocument();
+});
+
 test("一覧に戻るリンクがある", () => {
   const station = roadsideStations[0];
   renderDetailPage(station.id);

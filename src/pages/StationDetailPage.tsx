@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
+import { ExternalLinks } from "../components/ExternalLinks";
 import "./StationDetailPage.css";
 
 export function StationDetailPage() {
@@ -26,6 +27,10 @@ export function StationDetailPage() {
         <dt>登録年月</dt>
         <dd>{station.registrationDate ?? "不明"}</dd>
       </dl>
+      <ExternalLinks
+        mlitSourceUrl={station.mlitSourceUrl}
+        associationSourceUrl={station.associationSourceUrl}
+      />
       <Link to="/">一覧に戻る</Link>
     </section>
   );
