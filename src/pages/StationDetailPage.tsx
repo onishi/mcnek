@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
 import { ExternalLinks } from "../components/ExternalLinks";
+import { StationCoordinates } from "../components/StationCoordinates";
 import "./StationDetailPage.css";
 
 export function StationDetailPage() {
@@ -26,6 +27,10 @@ export function StationDetailPage() {
         <dd>{station.address}</dd>
         <dt>登録年月</dt>
         <dd>{station.registrationDate ?? "不明"}</dd>
+        <StationCoordinates
+          latitude={station.latitude}
+          longitude={station.longitude}
+        />
       </dl>
       <ExternalLinks
         mlitSourceUrl={station.mlitSourceUrl}
