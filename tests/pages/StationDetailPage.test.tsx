@@ -41,6 +41,12 @@ test("国土交通省の参照リンクを表示する", () => {
   ).toHaveAttribute("href", station.mlitSourceUrl);
 });
 
+test("緯度経度が未登録の場合は位置情報に未登録と表示する", () => {
+  const station = roadsideStations[0];
+  renderDetailPage(station.id);
+  expect(screen.getByText("未登録")).toBeInTheDocument();
+});
+
 test("連絡会の詳細URLが未登録の場合はその旨を表示する", () => {
   const station = roadsideStations.find(
     (s) => s.associationSourceUrl === null,
