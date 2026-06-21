@@ -189,11 +189,11 @@ npm run dev
 
 ### 12. 行ったリストのローカル保存
 
-- [ ] 詳細ページに「行った」切り替えを追加する
-- [ ] 訪問済み状態を localStorage に保存する
-- [ ] 一覧で訪問済み状態を表示する
-- [ ] 訪問済みだけの絞り込みを追加する
-- [ ] localStorage の読み書き関数をテストする
+- [x] 詳細ページに「行った」切り替えを追加する
+- [x] 訪問済み状態を localStorage に保存する
+- [x] 一覧で訪問済み状態を表示する
+- [x] 訪問済みだけの絞り込みを追加する
+- [x] localStorage の読み書き関数をテストする
 
 完了条件:
 
@@ -314,6 +314,8 @@ type VisitRecord = {
 - 緯度経度の取得元は国土地理院（GSI）の住所検索 API を想定する（API キー不要、既存の「所在地」データと相性が良い）。実際の取得・登録は外部 API へのネットワークアクセスが確保できた時点で別途行う想定で、本フェーズではデータモデルと欠落検出・バリデーションの仕組みのみ用意した
 - 緯度経度の欠落検出には `src/lib/coordinates.ts`（`hasCoordinates` / `findStationsWithoutCoordinates` / `isValidCoordinate`）を使う。現在は実データの全件が `latitude`/`longitude` ともに `null`
 - 詳細ページの位置情報欄（`src/components/StationCoordinates.tsx`）は緯度経度が `null` の場合「未登録」と表示し、地図データがなくても詳細ページが壊れないようにする
+- 訪問済み状態は `src/lib/visitStorage.ts` で localStorage（キー: `mcnek:visitRecords`）に保存する。データ形式は既存の `VisitRecord` 型を使い、`memo` は本フェーズでは未使用（`null` 固定）
+- 一覧の「行った道の駅だけ表示」チェックボックスのフィルタリングには `filterByVisited` を使う
 
 ## 次にやること
 

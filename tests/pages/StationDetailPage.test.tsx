@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { StationDetailPage } from "../../src/pages/StationDetailPage";
 import { roadsideStations } from "../../src/data/stations";
+import { isStationVisited } from "../../src/lib/visitStorage";
 
 function renderDetailPage(id: string) {
   return render(
@@ -12,6 +13,10 @@ function renderDetailPage(id: string) {
     </MemoryRouter>,
   );
 }
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 test("駅名を見出しに表示する", () => {
   const station = roadsideStations[0];
@@ -71,4 +76,29 @@ test("存在しない駅 ID の場合は見つからない旨を表示する", (
   expect(
     screen.getByText("指定された道の駅が見つかりません"),
   ).toBeInTheDocument();
+});
+
+test("「行った」ボタンを押すと訪問済みになり localStorage に保存される", () => {
+  const station = roadsideStations[0];
+  renderDetailPage(station.id);
+
+  const button = screen.getByRole("button", { name: "行った" });
+  fireEvent.click(button);
+
+  expect(
+    screen.getByRole("button", { name: "行った済み" }),
+  ).toBeInTheDocument();
+  expect(isStationVisited(station.id)).toBe(true);
+});
+
+test("訪問済みの状態でもう一度押すと未訪問に戻る", () => {
+  const station = roadsideStations[0];
+  renderDetailPage(station.id);
+
+  const button = screen.getByRole("button", { name: "行った" });
+  fireEvent.click(button);
+  fireEvent.click(screen.getByRole("button", { name: "行った済み" }));
+
+  expect(screen.getByRole("button", { name: "行った" })).toBeInTheDocument();
+  expect(isStationVisited(station.id)).toBe(false);
 });

@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
 import { ExternalLinks } from "../components/ExternalLinks";
 import { StationCoordinates } from "../components/StationCoordinates";
+import { VisitToggle } from "../components/VisitToggle";
+import { isStationVisited, setStationVisited } from "../lib/visitStorage";
 import "./StationDetailPage.css";
 
 export function StationDetailPage() {
   const { id } = useParams<{ id: string }>();
   const station = roadsideStations.find((s) => s.id === id);
+  const [visited, setVisited] = useState(
+    () => station !== undefined && isStationVisited(station.id),
+  );
 
   if (!station) {
     return (
@@ -18,6 +24,12 @@ export function StationDetailPage() {
       </section>
     );
   }
+
+  const handleToggleVisited = () => {
+    const next = !visited;
+    setStationVisited(station.id, next);
+    setVisited(next);
+  };
 
   return (
     <section className="station-detail">
@@ -32,6 +44,7 @@ export function StationDetailPage() {
           longitude={station.longitude}
         />
       </dl>
+      <VisitToggle visited={visited} onToggle={handleToggleVisited} />
       <ExternalLinks
         mlitSourceUrl={station.mlitSourceUrl}
         associationSourceUrl={station.associationSourceUrl}

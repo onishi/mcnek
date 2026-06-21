@@ -5,9 +5,14 @@ import "./StationList.css";
 type Props = {
   stations: RoadsideStation[];
   totalCount?: number;
+  visitedStationIds?: ReadonlySet<string>;
 };
 
-export function StationList({ stations, totalCount }: Props) {
+export function StationList({
+  stations,
+  totalCount,
+  visitedStationIds = new Set(),
+}: Props) {
   return (
     <section>
       <p className="station-count">{totalCount ?? stations.length} 件</p>
@@ -21,6 +26,9 @@ export function StationList({ stations, totalCount }: Props) {
                 <span className="station-name">{station.name}</span>
                 <span className="station-prefecture">{station.prefecture}</span>
                 <span className="station-address">{station.address}</span>
+                {visitedStationIds.has(station.id) && (
+                  <span className="station-visited-badge">行った済み</span>
+                )}
               </Link>
             </li>
           ))}
