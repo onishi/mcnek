@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "import:fetch": "tsx src/import/fetchMlitStations.ts",
     "import:mlit": "tsx src/import/importMlitStations.ts",
-    "import:michinoeki": "tsx src/import/fetchMichiNoEkiStations.ts"
+    "import:michinoeki:fetch": "tsx src/import/fetchMichiNoEkiStations.ts",
+    "import:michinoeki:merge": "tsx src/import/importMichiNoEkiAssociation.ts"
   },
   "dependencies": {
     "react": "^19.2.6",
