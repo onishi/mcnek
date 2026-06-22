@@ -2,9 +2,14 @@
   color: #444;
 }
 
+.data-match-prefecture {
+  margin-bottom: 24px;
+}
+
 .data-match-table {
   border-collapse: collapse;
-  margin-bottom: 24px;
+  width: 100%;
+  max-width: 600px;
   font-size: 0.9em;
 }
 
@@ -12,33 +17,9 @@
 .data-match-table td {
   border: 1px solid #ddd;
   padding: 4px 10px;
-  text-align: right;
-}
-
-.data-match-table th:first-child,
-.data-match-table td:first-child {
   text-align: left;
 }
 
-.data-match-unmatched-list {
-  list-style: none;
-  margin: 0 0 16px;
-  padding: 0;
-}
-
-.data-match-unmatched-list li {
-  padding: 2px 0;
-}
-
-.data-match-raw-list {
-  max-height: 400px;
-  overflow-y: auto;
-  margin-bottom: 24px;
-  border: 1px solid #ddd;
-}
-
-.data-match-raw-list .data-match-table {
-  margin-bottom: 0;
-  border: none;
-  width: 100%;
+.data-match-overflow-row {
+  background: #fff8e1;
 }

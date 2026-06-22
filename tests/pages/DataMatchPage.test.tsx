@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { DataMatchPage } from "../../src/pages/DataMatchPage";
 import { roadsideStations } from "../../src/data/stations";
 import { michiNoEkiStations } from "../../src/data/michiNoEkiStations";
-import { findUnmatchedStations } from "../../src/lib/associationMatch";
+import { groupStationsByPrefecture } from "../../src/lib/associationMatch";
 
 function renderDataMatchPage() {
   return render(
@@ -20,44 +20,60 @@ test("見出しが表示される", () => {
   ).toBeInTheDocument();
 });
 
-test("未一致件数の見出しが実データと一致する", () => {
+test("都道府県ごとの見出しに一致件数が表示される", () => {
   renderDataMatchPage();
-  const unmatchedCount = findUnmatchedStations(roadsideStations).length;
-  expect(
-    screen.getByRole("heading", { name: `未一致の駅 (${unmatchedCount} 件)` }),
-  ).toBeInTheDocument();
-});
+  const groups = groupStationsByPrefecture(roadsideStations, michiNoEkiStations);
+  const hokkaido = groups.find((group) => group.prefecture === "北海道");
+  if (!hokkaido) throw new Error("北海道のグループが見つかりません");
+  const matchedCount = hokkaido.rows.filter(
+    (row) => row.mlitStation && row.michiNoEkiRecord,
+  ).length;
 
-test("都道府県別の一致率テーブルに全都道府県分の行がある", () => {
-  renderDataMatchPage();
-  expect(screen.getAllByText("北海道").length).toBeGreaterThan(0);
-  expect(screen.getAllByText("沖縄県").length).toBeGreaterThan(0);
-});
-
-test("国土交通省データの一覧見出しが実データ件数と一致する", () => {
-  renderDataMatchPage();
   expect(
     screen.getByRole("heading", {
-      name: `国土交通省データの一覧 (${roadsideStations.length} 件)`,
+      name: `北海道 (${matchedCount}/${hokkaido.rows.length} 一致)`,
     }),
   ).toBeInTheDocument();
 });
 
-test("連絡会データの一覧見出しが実データ件数と一致する", () => {
+test("紐付けできた駅は国土交通省・連絡会の両方のリンクが同じ行に表示される", () => {
   renderDataMatchPage();
-  expect(
-    screen.getByRole("heading", {
-      name: `全国「道の駅」連絡会データの一覧 (${michiNoEkiStations.length} 件)`,
-    }),
-  ).toBeInTheDocument();
-});
+  const groups = groupStationsByPrefecture(roadsideStations, michiNoEkiStations);
+  const matchedRow = groups
+    .flatMap((group) => group.rows)
+    .find((row) => row.mlitStation && row.michiNoEkiRecord);
+  if (!matchedRow?.mlitStation || !matchedRow.michiNoEkiRecord) {
+    throw new Error("一致した駅が見つかりません");
+  }
 
-test("連絡会データの一覧から michi-no-eki.jp の詳細ページへリンクする", () => {
-  renderDataMatchPage();
-  const firstRecord = michiNoEkiStations[0];
-  const expectedHref = `https://www.michi-no-eki.jp${firstRecord.stationPath}`;
-  const links = screen
+  const mlitLink = screen
     .getAllByRole("link")
-    .filter((link) => link.getAttribute("href") === expectedHref);
-  expect(links).toHaveLength(1);
+    .find(
+      (link) => link.getAttribute("href") === `/stations/${matchedRow.mlitStation?.id}`,
+    );
+  if (!mlitLink) throw new Error("国土交通省データへのリンクが見つかりません");
+  const row = mlitLink.closest("tr");
+  expect(row).not.toBeNull();
+  expect(row).toHaveTextContent(matchedRow.michiNoEkiRecord.name);
+});
+
+test("紐付けできなかった駅は片側だけの行として表示される", () => {
+  renderDataMatchPage();
+  const groups = groupStationsByPrefecture(roadsideStations, michiNoEkiStations);
+  const unmatchedRow = groups
+    .flatMap((group) => group.rows)
+    .find((row) => !row.mlitStation || !row.michiNoEkiRecord);
+  if (!unmatchedRow) throw new Error("未一致の行が見つかりません");
+
+  const expectedHref = unmatchedRow.mlitStation
+    ? `/stations/${unmatchedRow.mlitStation.id}`
+    : `https://www.michi-no-eki.jp${unmatchedRow.michiNoEkiRecord?.stationPath}`;
+
+  const link = screen
+    .getAllByRole("link")
+    .find((candidate) => candidate.getAttribute("href") === expectedHref);
+  if (!link) throw new Error("未一致行へのリンクが見つかりません");
+  const row = link.closest("tr");
+  expect(row).toHaveClass("data-match-overflow-row");
+  expect(row).toHaveTextContent("—");
 });
