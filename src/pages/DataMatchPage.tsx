@@ -1,11 +1,14 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
+import { michiNoEkiStations } from "../data/michiNoEkiStations";
 import {
   computeAssociationMatchByPrefecture,
   findUnmatchedStations,
 } from "../lib/associationMatch";
 import "./DataMatchPage.css";
+
+const MICHI_NO_EKI_BASE_URL = "https://www.michi-no-eki.jp";
 
 export function DataMatchPage() {
   const prefectureStats = useMemo(
@@ -74,6 +77,62 @@ export function DataMatchPage() {
           ))}
         </ul>
       )}
+
+      <h2>国土交通省データの一覧 ({roadsideStations.length} 件)</h2>
+      <div className="data-match-raw-list">
+        <table className="data-match-table">
+          <thead>
+            <tr>
+              <th>都道府県</th>
+              <th>市区町村</th>
+              <th>駅名</th>
+            </tr>
+          </thead>
+          <tbody>
+            {roadsideStations.map((station) => (
+              <tr key={station.id}>
+                <td>{station.prefecture}</td>
+                <td>{station.municipality}</td>
+                <td>
+                  <Link to={`/stations/${station.id}`}>{station.name}</Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>
+        全国「道の駅」連絡会データの一覧 ({michiNoEkiStations.length} 件)
+      </h2>
+      <div className="data-match-raw-list">
+        <table className="data-match-table">
+          <thead>
+            <tr>
+              <th>都道府県</th>
+              <th>市区町村</th>
+              <th>駅名</th>
+            </tr>
+          </thead>
+          <tbody>
+            {michiNoEkiStations.map((record) => (
+              <tr key={record.stationPath}>
+                <td>{record.prefecture}</td>
+                <td>{record.municipality}</td>
+                <td>
+                  <a
+                    href={`${MICHI_NO_EKI_BASE_URL}${record.stationPath}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {record.name}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <Link to="/">一覧に戻る</Link>
     </section>

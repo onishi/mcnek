@@ -29,3 +29,16 @@
 .data-match-unmatched-list li {
   padding: 2px 0;
 }
+
+.data-match-raw-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 24px;
+  border: 1px solid #ddd;
+}
+
+.data-match-raw-list .data-match-table {
+  margin-bottom: 0;
+  border: none;
+  width: 100%;
+}

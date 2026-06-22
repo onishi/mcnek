@@ -5,6 +5,8 @@ import type { MichiNoEkiRecord } from "./parseMichiNoEkiPage";
 
 const STATIONS_PATH = "src/data/generated/mlitStations.json";
 const MICHI_NO_EKI_PATH = "data/raw/michinoeki-stations.json";
+const MICHI_NO_EKI_GENERATED_PATH =
+  "src/data/generated/michiNoEkiStations.json";
 
 async function main() {
   const stations = JSON.parse(
@@ -20,6 +22,10 @@ async function main() {
   );
 
   await writeFile(STATIONS_PATH, `${JSON.stringify(merged, null, 2)}\n`);
+  await writeFile(
+    MICHI_NO_EKI_GENERATED_PATH,
+    `${JSON.stringify(records, null, 2)}\n`,
+  );
 
   console.log(
     `突き合わせ件数: ${merged.length - unmatchedStations.length} / ${merged.length}`,
