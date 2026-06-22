@@ -1,0 +1,25 @@
+.data-match-summary {
+  color: #444;
+}
+
+.data-match-prefecture {
+  margin-bottom: 24px;
+}
+
+.data-match-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+  font-size: 0.9em;
+}
+
+.data-match-table th,
+.data-match-table td {
+  border: 1px solid #ddd;
+  padding: 4px 10px;
+  text-align: left;
+}
+
+.data-match-overflow-row {
+  background: #fff8e1;
+}
