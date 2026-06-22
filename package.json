@@ -12,7 +12,8 @@
     "test": "jest",
     "preview": "vite preview",
     "import:fetch": "tsx src/import/fetchMlitStations.ts",
-    "import:mlit": "tsx src/import/importMlitStations.ts"
+    "import:mlit": "tsx src/import/importMlitStations.ts",
+    "import:michinoeki": "tsx src/import/fetchMichiNoEkiStations.ts"
   },
   "dependencies": {
     "react": "^19.2.6",
@@ -41,6 +42,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
+    "jsdom": "^26.1.0",
     "prettier": "^3.8.4",
     "tsx": "^4.22.4",
     "typescript": "~6.0.2",
