@@ -1,0 +1,31 @@
+.data-match-summary {
+  color: #444;
+}
+
+.data-match-table {
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 0.9em;
+}
+
+.data-match-table th,
+.data-match-table td {
+  border: 1px solid #ddd;
+  padding: 4px 10px;
+  text-align: right;
+}
+
+.data-match-table th:first-child,
+.data-match-table td:first-child {
+  text-align: left;
+}
+
+.data-match-unmatched-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.data-match-unmatched-list li {
+  padding: 2px 0;
+}
