@@ -81,3 +81,20 @@ test("1 件のみのデータでも正しく表示する", () => {
   expect(screen.getByText("テスト道の駅")).toBeInTheDocument();
   expect(screen.getByText("東京都千代田区1-1-1")).toBeInTheDocument();
 });
+
+test("訪問済みの駅には「行った済み」のバッジを表示する", () => {
+  render(
+    <MemoryRouter>
+      <StationList
+        stations={[mockStation]}
+        visitedStationIds={new Set([mockStation.id])}
+      />
+    </MemoryRouter>,
+  );
+  expect(screen.getByText("行った済み")).toBeInTheDocument();
+});
+
+test("未訪問の駅にはバッジを表示しない", () => {
+  renderStationList([mockStation]);
+  expect(screen.queryByText("行った済み")).not.toBeInTheDocument();
+});
