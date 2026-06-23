@@ -205,11 +205,11 @@ npm run dev
 
 ### 13. 行ったリストの見える化
 
-- [ ] 行った駅だけの一覧ページを作る
-- [ ] 都道府県別の訪問数を表示する
-- [ ] 全体の訪問数と達成率を表示する
-- [ ] 地図上で訪問済みピンを区別する
-- [ ] 訪問数集計関数のユニットテストを作る
+- [x] 行った駅だけの一覧ページを作る
+- [x] 都道府県別の訪問数を表示する
+- [x] 全体の訪問数と達成率を表示する
+- [ ] 地図上で訪問済みピンを区別する（フェーズ11の地図 MVP が前提のため未着手）
+- [x] 訪問数集計関数のユニットテストを作る
 
 完了条件:
 
@@ -383,6 +383,8 @@ type VisitRecord = {
 - 詳細ページの位置情報欄（`src/components/StationCoordinates.tsx`）は緯度経度が `null` の場合「未登録」と表示し、地図データがなくても詳細ページが壊れないようにする
 - 訪問済み状態は `src/lib/visitStorage.ts` で localStorage（キー: `mcnek:visitRecords`）に保存する。データ形式は既存の `VisitRecord` 型を使い、`memo` は本フェーズでは未使用（`null` 固定）
 - 一覧の「行った道の駅だけ表示」チェックボックスのフィルタリングには `filterByVisited` を使う
+- 訪問数の集計（都道府県別件数、全体の訪問数・達成率）には `src/lib/visitStats.ts`（`countVisitedByPrefecture` / `getOverallVisitStats`）を使う。専用ページは `/visited`（`src/pages/VisitedStationsPage.tsx`）で、一覧ページから「行った道の駅を見る」リンクで遷移できる
+- 地図上での訪問済みピンの区別は、フェーズ 11（地図 MVP）で地図表示そのものが実装されてから対応する
 
 ## 次にやること
 

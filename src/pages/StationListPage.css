@@ -6,3 +6,9 @@
   font-size: 0.9em;
   color: #444;
 }
+
+.visited-stations-link {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 0.9em;
+}

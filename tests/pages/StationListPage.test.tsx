@@ -39,3 +39,11 @@ test("訪問済みの駅がない場合にチェックすると 0 件になる",
 
   expect(screen.getByText("0 件")).toBeInTheDocument();
 });
+
+test("行った道の駅一覧ページへのリンクがある", () => {
+  renderListPage();
+
+  expect(
+    screen.getByRole("link", { name: "行った道の駅を見る" }),
+  ).toHaveAttribute("href", "/visited");
+});
