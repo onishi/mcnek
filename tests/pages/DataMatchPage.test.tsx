@@ -150,3 +150,45 @@ test("チェックボックスを選ぶと手動紐付けの draft が localStor
   const drafts = getAllManualLinkDrafts();
   expect(drafts[unmatchedMlitRow.mlitStation.id]).toHaveLength(1);
 });
+
+test("手動紐付け後もチェックボックスが残り、外すと紐付けが解除される", () => {
+  renderDataMatchPage();
+  const groups = groupStationsByPrefecture(roadsideStations, michiNoEkiStations);
+  const unmatchedMlitRow = groups
+    .flatMap((group) => group.rows)
+    .find((row) => row.mlitStation && row.michiNoEkiRecords.length === 0);
+  if (!unmatchedMlitRow?.mlitStation) {
+    throw new Error("未一致の国土交通省データ行が見つかりません");
+  }
+  const stationId = unmatchedMlitRow.mlitStation.id;
+
+  const findRow = () => {
+    const link = screen
+      .getAllByRole("link")
+      .find(
+        (candidate) => candidate.getAttribute("href") === `/stations/${stationId}`,
+      );
+    if (!link) throw new Error("国土交通省データへのリンクが見つかりません");
+    const row = link.closest("tr");
+    if (!row) throw new Error("行が見つかりません");
+    return row;
+  };
+
+  const checkbox = findRow().querySelector("input[type='checkbox']");
+  if (!checkbox) throw new Error("チェックボックスが見つかりません");
+  fireEvent.click(checkbox);
+
+  expect(getAllManualLinkDrafts()[stationId]).toHaveLength(1);
+
+  // 紐付け後も同じチェックボックスが残っていて、外せること
+  const rowAfterLink = findRow();
+  const checkedBox = rowAfterLink.querySelector(
+    "input[type='checkbox']:checked",
+  );
+  if (!checkedBox) {
+    throw new Error("紐付け後にチェック済みのチェックボックスが見つかりません");
+  }
+  fireEvent.click(checkedBox);
+
+  expect(getAllManualLinkDrafts()[stationId]).toBeUndefined();
+});
