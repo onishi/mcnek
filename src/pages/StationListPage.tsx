@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
 import { StationList } from "../components/StationList";
 import { SearchFilter } from "../components/SearchFilter";
@@ -49,6 +50,9 @@ export function StationListPage() {
   return (
     <>
       <h1>道の駅一覧</h1>
+      <Link to="/visited" className="visited-stations-link">
+        行った道の駅を見る
+      </Link>
       <PrefectureSummary counts={prefectureCounts} />
       <SearchFilter
         query={query}
