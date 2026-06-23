@@ -11,11 +11,27 @@ import {
   type ManualLinkDraftMap,
 } from "../lib/manualLinkDraft";
 import { applyManualMichiNoEkiLinks } from "../import/applyManualMichiNoEkiLinks";
+import type { MichiNoEkiRecord } from "../import/parseMichiNoEkiPage";
 import "./DataMatchPage.css";
+
+function dedupeRecordsByPath(
+  records: (MichiNoEkiRecord | undefined)[],
+): MichiNoEkiRecord[] {
+  const byPath = new Map<string, MichiNoEkiRecord>();
+  for (const record of records) {
+    if (record) byPath.set(record.stationPath, record);
+  }
+  return [...byPath.values()];
+}
 
 export function DataMatchPage() {
   const [manualDrafts, setManualDrafts] = useState<ManualLinkDraftMap>(() =>
     getAllManualLinkDrafts(),
+  );
+
+  const ekiRecordByPath = useMemo(
+    () => new Map(michiNoEkiStations.map((record) => [record.stationPath, record])),
+    [],
   );
 
   const manualLinks = useMemo(
@@ -112,6 +128,22 @@ export function DataMatchPage() {
                   {group.rows.map((row) => {
                     const isMatched =
                       row.mlitStation && row.michiNoEkiRecords.length > 0;
+                    const manualPaths = row.mlitStation
+                      ? manualDrafts[row.mlitStation.id] ?? []
+                      : [];
+
+                    // 連絡会データを手動で選ぶ候補: まだ誰にも紐付いていない駅 +
+                    // 既にこの駅へ手動紐付け済みの候補（チェックを外せるようにするため）
+                    const candidateRecords = row.mlitStation
+                      ? dedupeRecordsByPath([
+                          ...unmatchedEkiRows.map(
+                            (candidateRow) => candidateRow.michiNoEkiRecords[0],
+                          ),
+                          ...manualPaths.map((path) =>
+                            ekiRecordByPath.get(path),
+                          ),
+                        ])
+                      : [];
 
                     return (
                       <tr
@@ -150,15 +182,13 @@ export function DataMatchPage() {
                               ))}
                             </ul>
                           )}
-                          {row.mlitStation && unmatchedEkiRows.length > 0 && (
+                          {row.mlitStation && candidateRecords.length > 0 && (
                             <fieldset className="data-match-manual-picker">
                               <legend>連絡会データを手動で選ぶ</legend>
-                              {unmatchedEkiRows.map((candidateRow) => {
-                                const record = candidateRow.michiNoEkiRecords[0];
-                                if (!record || !row.mlitStation) return null;
-                                const checked = (
-                                  manualDrafts[row.mlitStation.id] ?? []
-                                ).includes(record.stationPath);
+                              {candidateRecords.map((record) => {
+                                const checked = manualPaths.includes(
+                                  record.stationPath,
+                                );
 
                                 return (
                                   <label key={record.stationPath}>
@@ -181,7 +211,7 @@ export function DataMatchPage() {
                             </fieldset>
                           )}
                           {row.michiNoEkiRecords.length === 0 &&
-                            !(row.mlitStation && unmatchedEkiRows.length > 0) &&
+                            candidateRecords.length === 0 &&
                             "—"}
                         </td>
                       </tr>
