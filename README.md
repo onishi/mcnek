@@ -262,7 +262,7 @@ type RoadsideStation = {
   latitude: number | null;
   longitude: number | null;
   mlitSourceUrl: string;
-  associationSourceUrl: string | null;
+  associationSourceUrls: string[]; // 連絡会データは上り線・下り線などで1対多になる場合がある
   updatedAt: string;
 };
 
@@ -310,8 +310,9 @@ type VisitRecord = {
 - 国土交通省データの「県名」「所在地」列は元から都道府県・市区町村に分かれているため、正規化では型の検証（`Prefecture` への絞り込み）が主な処理になる
 - `id` は都道府県名と駅名から生成する安定したハッシュ値とする
 - 緯度経度・連絡会の詳細 URL は国土交通省データのみでは取得できないため、正規化時点では `null` のままにする
-- 連絡会データの取得は `npm run import:michinoeki:fetch`、国土交通省データへの詳細 URL 補完は `npm run import:michinoeki:merge` で行う（`src/import/matchMichiNoEkiStations.ts`）。突き合わせは都道府県＋正規化した駅名（全角英数字を半角化し空白を除去）の一致で行い、一致しなかった駅（表記揺れが大きいものなど、2026-06 時点で 1,231 件中 17 件）はログに出力し `associationSourceUrl` は `null` のままにする
-- 外部リンクは `src/components/ExternalLinks.tsx` にまとめる。`associationSourceUrl` が `null` の駅（連絡会データと名称が一致しなかった一部の駅）はリンクの代わりに未登録メッセージを表示する
+- 連絡会データの取得は `npm run import:michinoeki:fetch`、国土交通省データへの詳細 URL 補完は `npm run import:michinoeki:merge` で行う（`src/import/matchMichiNoEkiStations.ts`）。突き合わせは都道府県＋正規化した駅名（全角英数字を半角化し空白を除去）の一致で行い、一致しなかった駅はログに出力し `associationSourceUrls` は空配列のままにする
+- 連絡会データは高速道路の上り線・下り線などで1駅が複数件に分かれる場合があるため、`associationSourceUrls` は配列で持つ（国土交通省:連絡会 = 1対多）。名前の自動マッチングでは検出できないこの種のケースは、`/data-check` の手動紐付け UI でチェックして補う運用とする（`src/lib/manualLinkDraft.ts` で localStorage にドラフト保存 → 「JSONでコピー」→ `data/manual/michiNoEkiManualLinks.json` に保存 → `npm run import:michinoeki:merge` を再実行。適用処理は `src/import/applyManualMichiNoEkiLinks.ts`）
+- 外部リンクは `src/components/ExternalLinks.tsx` にまとめる。`associationSourceUrls` が空の駅（連絡会データと名称が一致しなかった一部の駅）はリンクの代わりに未登録メッセージを表示する
 - 緯度経度の取得元は国土地理院（GSI）の住所検索 API を想定する（API キー不要、既存の「所在地」データと相性が良い）。実際の取得・登録は外部 API へのネットワークアクセスが確保できた時点で別途行う想定で、本フェーズではデータモデルと欠落検出・バリデーションの仕組みのみ用意した
 - 緯度経度の欠落検出には `src/lib/coordinates.ts`（`hasCoordinates` / `findStationsWithoutCoordinates` / `isValidCoordinate`）を使う。現在は実データの全件が `latitude`/`longitude` ともに `null`
 - 詳細ページの位置情報欄（`src/components/StationCoordinates.tsx`）は緯度経度が `null` の場合「未登録」と表示し、地図データがなくても詳細ページが壊れないようにする

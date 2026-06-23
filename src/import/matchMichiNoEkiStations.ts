@@ -42,7 +42,7 @@ export function matchMichiNoEkiStations(
 
     return {
       ...station,
-      associationSourceUrl: buildMichiNoEkiUrl(record.stationPath),
+      associationSourceUrls: [buildMichiNoEkiUrl(record.stationPath)],
     };
   });
 

@@ -23,3 +23,45 @@
 .data-match-overflow-row {
   background: #fff8e1;
 }
+
+.data-match-eki-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.data-match-manual-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #444;
+  margin-bottom: 24px;
+}
+
+.data-match-manual-hint {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.data-match-manual-picker {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9em;
+}
+
+.data-match-manual-picker legend {
+  font-size: 0.8em;
+  color: #777;
+  padding: 0;
+}
+
+.data-match-manual-picker label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
