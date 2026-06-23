@@ -13,7 +13,7 @@ const stations: RoadsideStation[] = [
     latitude: 36.6939,
     longitude: 139.1486,
     mlitSourceUrl: "https://example.com",
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-01-01T00:00:00.000Z",
   },
   {
@@ -27,7 +27,7 @@ const stations: RoadsideStation[] = [
     latitude: 42.6447,
     longitude: 140.4097,
     mlitSourceUrl: "https://example.com",
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-01-01T00:00:00.000Z",
   },
   {
@@ -41,7 +41,7 @@ const stations: RoadsideStation[] = [
     latitude: 39.3486,
     longitude: 141.5719,
     mlitSourceUrl: "https://example.com",
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-01-01T00:00:00.000Z",
   },
 ];

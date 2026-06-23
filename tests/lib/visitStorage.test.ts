@@ -20,7 +20,7 @@ function buildStation(
     latitude: null,
     longitude: null,
     mlitSourceUrl: "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-06-20T00:00:00.000Z",
     ...overrides,
   };

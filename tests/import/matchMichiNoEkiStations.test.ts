@@ -16,7 +16,7 @@ const baseStation: RoadsideStation = {
   latitude: null,
   longitude: null,
   mlitSourceUrl: "https://example.com",
-  associationSourceUrl: null,
+  associationSourceUrls: [],
   updatedAt: "2026-01-01T00:00:00.000Z",
 };
 
@@ -47,9 +47,9 @@ test("駅名・都道府県が一致する駅に詳細URLを設定する", () =>
     [buildRecord()],
   );
 
-  expect(stations[0].associationSourceUrl).toBe(
+  expect(stations[0].associationSourceUrls).toEqual([
     "https://www.michi-no-eki.jp/stations/views/1",
-  );
+  ]);
   expect(unmatchedStations).toHaveLength(0);
 });
 
@@ -59,19 +59,19 @@ test("全角数字や空白の差異があっても一致させる", () => {
     [buildRecord({ name: "ルート２２９元和台" })],
   );
 
-  expect(stations[0].associationSourceUrl).toBe(
+  expect(stations[0].associationSourceUrls).toEqual([
     "https://www.michi-no-eki.jp/stations/views/1",
-  );
+  ]);
   expect(unmatchedStations).toHaveLength(0);
 });
 
-test("一致しない駅は associationSourceUrl を変更せず未一致として返す", () => {
+test("一致しない駅は associationSourceUrls を変更せず未一致として返す", () => {
   const { stations, unmatchedStations } = matchMichiNoEkiStations(
     [baseStation],
     [buildRecord({ name: "別の道の駅" })],
   );
 
-  expect(stations[0].associationSourceUrl).toBeNull();
+  expect(stations[0].associationSourceUrls).toEqual([]);
   expect(unmatchedStations).toEqual([baseStation]);
 });
 
@@ -88,7 +88,7 @@ test("入力データを変更せず新しいオブジェクトを返す", () =>
   const input = [baseStation];
   const { stations } = matchMichiNoEkiStations(input, [buildRecord()]);
 
-  expect(baseStation.associationSourceUrl).toBeNull();
+  expect(baseStation.associationSourceUrls).toEqual([]);
   expect(stations).not.toBe(input);
   expect(stations[0]).not.toBe(baseStation);
 });

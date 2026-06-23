@@ -47,7 +47,7 @@ export function StationDetailPage() {
       <VisitToggle visited={visited} onToggle={handleToggleVisited} />
       <ExternalLinks
         mlitSourceUrl={station.mlitSourceUrl}
-        associationSourceUrl={station.associationSourceUrl}
+        associationSourceUrls={station.associationSourceUrls}
       />
       <Link to="/">一覧に戻る</Link>
     </section>

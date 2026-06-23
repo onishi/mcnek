@@ -5,7 +5,7 @@ test("国土交通省のリンクを表示する", () => {
   render(
     <ExternalLinks
       mlitSourceUrl="https://www.mlit.go.jp/road/Michi-no-Eki/list.html"
-      associationSourceUrl={null}
+      associationSourceUrls={[]}
     />,
   );
   expect(
@@ -20,7 +20,7 @@ test("連絡会の詳細URLがある場合はリンクを表示する", () => {
   render(
     <ExternalLinks
       mlitSourceUrl="https://www.mlit.go.jp/road/Michi-no-Eki/list.html"
-      associationSourceUrl="https://www.michi-no-eki.jp/stations/1"
+      associationSourceUrls={["https://www.michi-no-eki.jp/stations/1"]}
     />,
   );
   expect(
@@ -28,11 +28,33 @@ test("連絡会の詳細URLがある場合はリンクを表示する", () => {
   ).toHaveAttribute("href", "https://www.michi-no-eki.jp/stations/1");
 });
 
+test("連絡会の詳細URLが複数ある場合は番号付きで並べる", () => {
+  render(
+    <ExternalLinks
+      mlitSourceUrl="https://www.mlit.go.jp/road/Michi-no-Eki/list.html"
+      associationSourceUrls={[
+        "https://www.michi-no-eki.jp/stations/1",
+        "https://www.michi-no-eki.jp/stations/2",
+      ]}
+    />,
+  );
+  expect(
+    screen.getByRole("link", {
+      name: "全国「道の駅」連絡会の詳細を見る（1）",
+    }),
+  ).toHaveAttribute("href", "https://www.michi-no-eki.jp/stations/1");
+  expect(
+    screen.getByRole("link", {
+      name: "全国「道の駅」連絡会の詳細を見る（2）",
+    }),
+  ).toHaveAttribute("href", "https://www.michi-no-eki.jp/stations/2");
+});
+
 test("連絡会の詳細URLがない場合は未登録メッセージを表示する", () => {
   render(
     <ExternalLinks
       mlitSourceUrl="https://www.mlit.go.jp/road/Michi-no-Eki/list.html"
-      associationSourceUrl={null}
+      associationSourceUrls={[]}
     />,
   );
   expect(
@@ -47,7 +69,7 @@ test("外部リンクは新しいタブで開く", () => {
   render(
     <ExternalLinks
       mlitSourceUrl="https://www.mlit.go.jp/road/Michi-no-Eki/list.html"
-      associationSourceUrl="https://www.michi-no-eki.jp/stations/1"
+      associationSourceUrls={["https://www.michi-no-eki.jp/stations/1"]}
     />,
   );
   for (const link of screen.getAllByRole("link")) {

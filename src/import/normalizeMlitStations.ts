@@ -68,7 +68,7 @@ export function normalizeMlitStation(
     latitude: null,
     longitude: null,
     mlitSourceUrl: MLIT_LIST_URL,
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt,
   };
 }

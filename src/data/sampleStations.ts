@@ -14,7 +14,7 @@ export const sampleStations: RoadsideStation[] = [
     latitude: 36.6939,
     longitude: 139.1486,
     mlitSourceUrl: MLIT_LIST_URL,
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-06-16T00:00:00.000Z",
   },
   {
@@ -28,7 +28,7 @@ export const sampleStations: RoadsideStation[] = [
     latitude: 42.6447,
     longitude: 140.4097,
     mlitSourceUrl: MLIT_LIST_URL,
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-06-16T00:00:00.000Z",
   },
   {
@@ -42,7 +42,7 @@ export const sampleStations: RoadsideStation[] = [
     latitude: 39.3486,
     longitude: 141.5719,
     mlitSourceUrl: MLIT_LIST_URL,
-    associationSourceUrl: null,
+    associationSourceUrls: [],
     updatedAt: "2026-06-16T00:00:00.000Z",
   },
 ];

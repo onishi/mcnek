@@ -67,6 +67,8 @@ export type Region = (typeof REGIONS)[number];
  * 道の駅の登録情報。
  * 地方（Region）はフィールドとして持たず、prefecture から導出する（src/data/regions.ts）。
  * registrationDate は "YYYY-MM" 形式の文字列、または未登録時 null。
+ * 連絡会データは上り線・下り線などで複数件に分かれる場合があるため、
+ * associationSourceUrls は配列（1対多）で持つ。未紐付けの場合は空配列。
  */
 export type RoadsideStation = {
   id: string;
@@ -79,7 +81,7 @@ export type RoadsideStation = {
   latitude: number | null;
   longitude: number | null;
   mlitSourceUrl: string;
-  associationSourceUrl: string | null;
+  associationSourceUrls: string[];
   updatedAt: string;
 };
 

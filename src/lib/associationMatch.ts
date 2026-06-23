@@ -11,7 +11,7 @@ export type PrefectureMatchStat = {
 
 export type PrefectureMatchRow = {
   mlitStation: RoadsideStation | null;
-  michiNoEkiRecord: MichiNoEkiRecord | null;
+  michiNoEkiRecords: MichiNoEkiRecord[];
 };
 
 export type PrefectureMatchGroup = {
@@ -20,9 +20,9 @@ export type PrefectureMatchGroup = {
 };
 
 export function hasAssociationMatch(
-  station: Pick<RoadsideStation, "associationSourceUrl">,
+  station: Pick<RoadsideStation, "associationSourceUrls">,
 ): boolean {
-  return station.associationSourceUrl !== null;
+  return station.associationSourceUrls.length > 0;
 }
 
 export function findUnmatchedStations(
@@ -59,14 +59,15 @@ function isPrefecture(value: string): value is Prefecture {
 
 /** マッチした行を先頭に、紐付けできなかった行をその後ろに並べる */
 function byMatchedFirst(a: PrefectureMatchRow, b: PrefectureMatchRow): number {
-  const aMatched = a.mlitStation && a.michiNoEkiRecord ? 0 : 1;
-  const bMatched = b.mlitStation && b.michiNoEkiRecord ? 0 : 1;
+  const aMatched = a.mlitStation && a.michiNoEkiRecords.length > 0 ? 0 : 1;
+  const bMatched = b.mlitStation && b.michiNoEkiRecords.length > 0 ? 0 : 1;
   return aMatched - bMatched;
 }
 
 /**
  * 国土交通省データと連絡会データを都道府県ごとにグループ化し、
- * 紐付けできた駅は同じ行に、紐付けできなかった駅はその後ろに並べる。
+ * 紐付けできた駅は同じ行に（1対多の場合は連絡会データを複数件並べて）、
+ * 紐付けできなかった駅はその後ろに並べる。
  */
 export function groupStationsByPrefecture(
   stations: RoadsideStation[],
@@ -86,14 +87,13 @@ export function groupStationsByPrefecture(
     const rows = rowsByPrefecture.get(station.prefecture);
     if (!rows) continue;
 
-    const record = station.associationSourceUrl
-      ? recordByPath.get(extractMichiNoEkiPath(station.associationSourceUrl)) ??
-        null
-      : null;
-    if (record) {
+    const michiNoEkiRecords = station.associationSourceUrls
+      .map((url) => recordByPath.get(extractMichiNoEkiPath(url)))
+      .filter((record): record is MichiNoEkiRecord => record !== undefined);
+    for (const record of michiNoEkiRecords) {
       matchedPaths.add(record.stationPath);
     }
-    rows.push({ mlitStation: station, michiNoEkiRecord: record });
+    rows.push({ mlitStation: station, michiNoEkiRecords });
   }
 
   for (const record of records) {
@@ -102,7 +102,7 @@ export function groupStationsByPrefecture(
 
     const rows = rowsByPrefecture.get(record.prefecture);
     if (!rows) continue;
-    rows.push({ mlitStation: null, michiNoEkiRecord: record });
+    rows.push({ mlitStation: null, michiNoEkiRecords: [record] });
   }
 
   return PREFECTURES.map((prefecture) => {
