@@ -8,7 +8,11 @@ type Props = {
 
 export function PrefectureSummary({ counts }: Props) {
   return (
-    <ul className="prefecture-summary">
+    <ul
+      className="prefecture-summary"
+      tabIndex={0}
+      aria-label="都道府県別の件数（スクロールできます）"
+    >
       {PREFECTURES.map((prefecture) => (
         <li key={prefecture} className="prefecture-summary-item">
           <span className="prefecture-summary-name">{prefecture}</span>

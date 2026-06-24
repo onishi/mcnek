@@ -1,5 +1,5 @@
 .station-detail-not-found {
-  color: #777;
+  color: #666;
 }
 
 .station-detail-info {
@@ -8,7 +8,7 @@
 
 .station-detail-info dt {
   font-size: 0.85em;
-  color: #777;
+  color: #666;
   margin-top: 12px;
 }
 
