@@ -25,6 +25,13 @@ test("見出しが表示される", () => {
   ).toBeInTheDocument();
 });
 
+test("データ取得状況のレポートが表示される", () => {
+  renderDataMatchPage();
+  expect(
+    screen.getByRole("heading", { name: "データ取得状況" }),
+  ).toBeInTheDocument();
+});
+
 test("都道府県ごとの見出しに一致件数が表示される", () => {
   renderDataMatchPage();
   const groups = groupStationsByPrefecture(roadsideStations, michiNoEkiStations);
