@@ -2,13 +2,19 @@ import { buildMichiNoEkiUrl } from "../lib/michiNoEkiUrl";
 import type { RoadsideStation } from "../types/roadsideStation";
 import type { MichiNoEkiRecord } from "./parseMichiNoEkiPage";
 
-/** 全角英数字を半角化し、全角・半角の空白を除いて突き合わせ用に正規化する。 */
+/**
+ * 全角英数字を半角化し、空白・中点・かっこの表記揺れを統一して
+ * 突き合わせ用に正規化する。
+ */
 export function normalizeStationName(name: string): string {
   return name
     .replace(/[Ａ-Ｚａ-ｚ０-９]/g, (c) =>
       String.fromCharCode(c.charCodeAt(0) - 0xfee0),
     )
     .replace(/[\s\u3000]+/g, "")
+    .replace(/[・･]/g, "・") // 中点（・/･）を全角の「・」に統一
+    .replace(/[「『]/g, "「") // かっこ開き（「/『）を「に統一
+    .replace(/[」』]/g, "」") // かっこ閉じ（」/』）を」に統一
     .trim();
 }
 

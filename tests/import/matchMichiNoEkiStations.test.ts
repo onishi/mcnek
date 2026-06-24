@@ -41,6 +41,18 @@ test.each([
   expect(normalizeStationName(input)).toBe(expected);
 });
 
+test("半角・全角の中点の違いを無視して正規化する", () => {
+  expect(normalizeStationName("伯方Ｓ・Ｃパーク")).toBe(
+    normalizeStationName("伯方S･Cパーク"),
+  );
+});
+
+test("「」と『』のかっこの違いを無視して正規化する", () => {
+  expect(normalizeStationName("美里「佐俣の湯」")).toBe(
+    normalizeStationName("美里『佐俣の湯』"),
+  );
+});
+
 test("駅名・都道府県が一致する駅に詳細URLを設定する", () => {
   const { stations, unmatchedStations } = matchMichiNoEkiStations(
     [baseStation],
