@@ -32,6 +32,23 @@ npm run dev
 - `npm run format:check`: Prettier の整形チェックのみ行う（CI 向け）
 - `npm run build`: 型チェックと本番ビルドを実行する
 
+## データ更新手順
+
+公式データを最新化するときは、以下を順番に実行する。
+
+```sh
+npm run import:fetch            # 国土交通省 XLS を取得（data/raw/ に保存、Git管理外）
+npm run import:mlit             # XLS を正規化し src/data/generated/mlitStations.json を更新
+npm run import:michinoeki:fetch # 連絡会サイトをスクレイピング（data/raw/ に保存）
+npm run import:michinoeki:merge # 連絡会データを突き合わせ、手動紐付け（data/manual/）も適用
+```
+
+- `npm run import:mlit` を実行すると、前回コミットされていたデータとの差分（新規登録・廃止・名称変更・所在地変更）を `src/data/generated/mlitStationsDiff.json` に保存し、コンソールにも件数を表示する
+- 取得日時とデータ件数は `src/data/generated/importMeta.json` に保存される
+- `npm run dev` で `/data-check` を開くと、取得状況と差分レポートをまとめて確認できる
+- 差分の内容を確認したうえで、生成された JSON ファイルをコミットする
+- 自動で突き合わせできなかった連絡会データは `/data-check` の手動紐付け UI でチェックし、「JSONでコピー」した内容を `data/manual/michiNoEkiManualLinks.json` に保存してから `import:michinoeki:merge` を再実行する
+
 ## 開発フェーズ
 
 小さく作って、完了したらチェックを付けて進める。各フェーズは原則 1 つの PR で終わる大きさにする。
@@ -181,6 +198,8 @@ npm run dev
 
 ### 11. 地図 MVP
 
+- [ ] 連絡会サイトの詳細ページから番地まで含む住所を取得する（国土交通省データの「所在地」は市区町村単位までのため、そのまま座標化すると約半数の駅で座標が重複する。詳細は技術メモ参照）
+- [ ] 取得した住所を GSI 住所検索 API で座標化し `RoadsideStation` に保存する
 - [ ] 地図ライブラリを選ぶ
 - [ ] 全国地図を表示する
 - [ ] 緯度経度がある駅だけピン表示する
@@ -218,11 +237,11 @@ npm run dev
 ### 14. データ更新運用
 
 - [x] データ取得コマンドを npm script にする（`import:fetch` / `import:mlit` / `import:michinoeki:fetch` / `import:michinoeki:merge`）
-- [ ] 取得日とデータ件数を保存する
-- [ ] 前回データとの差分を出す
-- [ ] 新規登録、名称変更、所在地変更を分けて表示する
-- [ ] 差分レポートを `/data-check` に統合し、更新ごとの確認を1画面で完結させる
-- [ ] データ更新手順を README または docs に書く
+- [x] 取得日とデータ件数を保存する
+- [x] 前回データとの差分を出す
+- [x] 新規登録、名称変更、所在地変更を分けて表示する
+- [x] 差分レポートを `/data-check` に統合し、更新ごとの確認を1画面で完結させる
+- [x] データ更新手順を README または docs に書く
 
 完了条件:
 
@@ -373,7 +392,7 @@ type VisitRecord = {
 - 一覧ページは件数が多い（1,200 件超）ため 30 件ずつのページングを行う（`src/lib/paginate.ts`）
 - 都道府県別の件数表示には `src/lib/countByPrefecture.ts` を使う
 - 国土交通省データの「県名」「所在地」列は元から都道府県・市区町村に分かれているため、正規化では型の検証（`Prefecture` への絞り込み）が主な処理になる
-- `id` は都道府県名と駅名から生成する安定したハッシュ値とする
+- `id` は都道府県名と駅名から生成する安定したハッシュ値とする。駅名が変わると `id` も変わるため、データ更新時の差分検出（後述）では `id` ではなく都道府県＋市区町村＋登録回をキーに前回データと突き合わせる
 - 緯度経度・連絡会の詳細 URL は国土交通省データのみでは取得できないため、正規化時点では `null` のままにする
 - 連絡会データの取得は `npm run import:michinoeki:fetch`、国土交通省データへの詳細 URL 補完は `npm run import:michinoeki:merge` で行う（`src/import/matchMichiNoEkiStations.ts`）。突き合わせは都道府県＋正規化した駅名（全角英数字を半角化し空白を除去）の一致で行い、一致しなかった駅はログに出力し `associationSourceUrls` は空配列のままにする
 - 連絡会データは高速道路の上り線・下り線などで1駅が複数件に分かれる場合があるため、`associationSourceUrls` は配列で持つ（国土交通省:連絡会 = 1対多）。名前の自動マッチングでは検出できないこの種のケースは、`/data-check` の手動紐付け UI でチェックして補う運用とする（`src/lib/manualLinkDraft.ts` で localStorage にドラフト保存 → 「JSONでコピー」→ `data/manual/michiNoEkiManualLinks.json` に保存 → `npm run import:michinoeki:merge` を再実行。適用処理は `src/import/applyManualMichiNoEkiLinks.ts`）
@@ -381,6 +400,10 @@ type VisitRecord = {
 - 緯度経度の取得元は国土地理院（GSI）の住所検索 API を想定する（API キー不要、既存の「所在地」データと相性が良い）。実際の取得・登録は外部 API へのネットワークアクセスが確保できた時点で別途行う想定で、本フェーズではデータモデルと欠落検出・バリデーションの仕組みのみ用意した
 - 緯度経度の欠落検出には `src/lib/coordinates.ts`（`hasCoordinates` / `findStationsWithoutCoordinates` / `isValidCoordinate`）を使う。現在は実データの全件が `latitude`/`longitude` ともに `null`
 - 詳細ページの位置情報欄（`src/components/StationCoordinates.tsx`）は緯度経度が `null` の場合「未登録」と表示し、地図データがなくても詳細ページが壊れないようにする
+- 国土地理院（GSI）の住所検索 API（`https://msearch.gsi.go.jp/address-search/AddressSearch`）で実際に座標取得を試したところ、国土交通省データの「所在地」は市区町村単位までしかなく、同一市区町村に複数駅ある場合（全体の約半数、235市区町村・615駅）は同じ座標になってしまうことが分かった。地図 MVP（フェーズ 11）に進む前に、連絡会サイトの詳細ページ（番地まで含む住所が載っている）から正確な住所を取得する作業が必要（フェーズ 11 着手時に再検討）
+- データ更新時の差分検出は `src/import/diffMlitStations.ts`（`diffMlitStations`）で行う。前回コミット済みの `mlitStations.json` と今回パースした結果を都道府県＋市区町村＋登録回で突き合わせ、新規登録・廃止・名称変更・所在地変更に分類して `src/data/generated/mlitStationsDiff.json` に保存する。`npm run import:mlit` 実行時に自動生成される
+- 取得日時とデータ件数は `src/lib/importMeta.ts`（`ImportMeta` 型）で表し、`src/data/generated/importMeta.json` に保存する。`npm run import:mlit` で国土交通省データ分、`npm run import:michinoeki:merge` で連絡会データ分（取得日時は `data/raw/michinoeki-stations.json` のファイル更新日時を利用）を更新する
+- データ取得状況・差分レポートは `/data-check` の `src/components/ImportStatusReport.tsx` にまとめて表示する
 - 訪問済み状態は `src/lib/visitStorage.ts` で localStorage（キー: `mcnek:visitRecords`）に保存する。データ形式は既存の `VisitRecord` 型を使い、`memo` は本フェーズでは未使用（`null` 固定）
 - 一覧の「行った道の駅だけ表示」チェックボックスのフィルタリングには `filterByVisited` を使う
 - 訪問数の集計（都道府県別件数、全体の訪問数・達成率）には `src/lib/visitStats.ts`（`countVisitedByPrefecture` / `getOverallVisitStats`）を使う。専用ページは `/visited`（`src/pages/VisitedStationsPage.tsx`）で、一覧ページから「行った道の駅を見る」リンクで遷移できる

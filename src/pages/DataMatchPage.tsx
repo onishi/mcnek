@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { roadsideStations } from "../data/stations";
 import { michiNoEkiStations } from "../data/michiNoEkiStations";
+import { importMeta } from "../data/importMeta";
+import { mlitStationsDiff } from "../data/mlitStationsDiff";
 import { groupStationsByPrefecture } from "../lib/associationMatch";
 import { buildMichiNoEkiUrl } from "../lib/michiNoEkiUrl";
 import {
@@ -12,6 +14,7 @@ import {
 } from "../lib/manualLinkDraft";
 import { applyManualMichiNoEkiLinks } from "../import/applyManualMichiNoEkiLinks";
 import type { MichiNoEkiRecord } from "../import/parseMichiNoEkiPage";
+import { ImportStatusReport } from "../components/ImportStatusReport";
 import "./DataMatchPage.css";
 
 function dedupeRecordsByPath(
@@ -87,6 +90,7 @@ export function DataMatchPage() {
   return (
     <section className="data-match">
       <h1>データ照合</h1>
+      <ImportStatusReport importMeta={importMeta} diff={mlitStationsDiff} />
       <p className="data-match-summary">
         国土交通省データ {totalCount} 件中、全国「道の駅」連絡会データと
         {totalMatched} 件が一致（未一致 {totalCount - totalMatched} 件）
