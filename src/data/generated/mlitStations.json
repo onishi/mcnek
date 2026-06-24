@@ -2634,7 +2634,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/18935"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -2744,7 +2746,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/18942"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -5127,7 +5131,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19843"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -6645,7 +6651,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19136"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -7331,7 +7339,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19218"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -9953,7 +9963,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19289"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -10847,7 +10859,10 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19969",
+      "https://www.michi-no-eki.jp/stations/views/19970"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -13917,7 +13932,10 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19832",
+      "https://www.michi-no-eki.jp/stations/views/22425"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -14059,7 +14077,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19518"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -14361,7 +14381,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19532"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -16519,7 +16541,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19657"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -16725,7 +16749,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19670"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -18211,7 +18237,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19751"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -19137,7 +19165,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/22061"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -19487,7 +19517,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19924"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {
@@ -19533,7 +19565,9 @@
     "latitude": null,
     "longitude": null,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
-    "associationSourceUrls": [],
+    "associationSourceUrls": [
+      "https://www.michi-no-eki.jp/stations/views/19814"
+    ],
     "updatedAt": "2026-06-24T01:35:52.074Z"
   },
   {

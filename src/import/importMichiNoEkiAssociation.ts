@@ -4,6 +4,7 @@ import type { ManualMichiNoEkiLink } from "../lib/manualMichiNoEkiLinks";
 import type { ImportMeta } from "../lib/importMeta";
 import { applyManualMichiNoEkiLinks } from "./applyManualMichiNoEkiLinks";
 import { matchMichiNoEkiStations } from "./matchMichiNoEkiStations";
+import { validateManualMichiNoEkiLinks } from "./validateManualMichiNoEkiLinks";
 import type { MichiNoEkiRecord } from "./parseMichiNoEkiPage";
 
 const STATIONS_PATH = "src/data/generated/mlitStations.json";
@@ -45,6 +46,19 @@ async function main() {
     await readFile(MICHI_NO_EKI_PATH, "utf-8"),
   ) as MichiNoEkiRecord[];
   const manualLinks = await readManualLinks();
+
+  const { unknownStationIds, unknownStationPaths } =
+    validateManualMichiNoEkiLinks(manualLinks, stations, records);
+  if (unknownStationIds.length > 0) {
+    console.warn(
+      `手動紐付けデータに存在しない駅IDがあります: ${unknownStationIds.join(", ")}`,
+    );
+  }
+  if (unknownStationPaths.length > 0) {
+    console.warn(
+      `手動紐付けデータに存在しない連絡会パスがあります: ${unknownStationPaths.join(", ")}`,
+    );
+  }
 
   const { stations: autoMatched } = matchMichiNoEkiStations(
     stations,
