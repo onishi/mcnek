@@ -9,7 +9,11 @@ type Props = {
 
 export function VisitedPrefectureSummary({ counts, visitedCounts }: Props) {
   return (
-    <ul className="visited-prefecture-summary">
+    <ul
+      className="visited-prefecture-summary"
+      tabIndex={0}
+      aria-label="都道府県別の達成状況（スクロールできます）"
+    >
       {PREFECTURES.map((prefecture) => (
         <li key={prefecture} className="visited-prefecture-summary-item">
           <span className="visited-prefecture-summary-name">{prefecture}</span>
