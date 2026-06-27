@@ -4,9 +4,11 @@ import { roadsideStations } from "../data/stations";
 import { StationList } from "../components/StationList";
 import { SearchFilter } from "../components/SearchFilter";
 import { PrefectureSummary } from "../components/PrefectureSummary";
+import { RegionSummary } from "../components/RegionSummary";
 import { Pagination } from "../components/Pagination";
 import { filterStations } from "../lib/filterStations";
 import { countByPrefecture } from "../lib/countByPrefecture";
+import { countByRegion } from "../lib/countByRegion";
 import { getTotalPages, paginate } from "../lib/paginate";
 import { filterByVisited, getVisitedStationIds } from "../lib/visitStorage";
 import type { Prefecture, Region } from "../types/roadsideStation";
@@ -33,6 +35,11 @@ export function StationListPage() {
     [],
   );
 
+  const regionCounts = useMemo(
+    () => countByRegion(roadsideStations),
+    [],
+  );
+
   const visitedStationIds = useMemo(() => new Set(getVisitedStationIds()), []);
 
   const filteredStations = useMemo(() => {
@@ -53,10 +60,19 @@ export function StationListPage() {
       <Link to="/visited" className="visited-stations-link">
         行った道の駅を見る
       </Link>
+      <RegionSummary
+        counts={regionCounts}
+        selected={region}
+        onSelect={(r) => {
+          setRegion(r);
+          setPrefecture("");
+        }}
+      />
       <PrefectureSummary
         counts={prefectureCounts}
         selected={prefecture}
         onSelect={setPrefecture}
+        filterRegion={region}
       />
       <SearchFilter
         query={query}

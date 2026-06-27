@@ -1,0 +1,52 @@
+.region-summary {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.region-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border: 1px solid #bbb;
+  border-radius: 14px;
+  font-size: 0.85em;
+  color: #444;
+  background: #f0f0f0;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.region-summary-item:hover {
+  background: #d0e4f8;
+  border-color: #4a90d9;
+  color: #1a5fa8;
+}
+
+.region-summary-item--active {
+  background: #2a6fb8;
+  border-color: #1a5098;
+  color: #fff;
+}
+
+.region-summary-count {
+  font-weight: bold;
+  color: #666;
+}
+
+.region-summary-item:hover .region-summary-count {
+  color: #1a5fa8;
+}
+
+.region-summary-item--active .region-summary-count {
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0 5px;
+}
