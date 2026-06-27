@@ -4,9 +4,11 @@ import "./PrefectureSummary.css";
 
 type Props = {
   counts: Record<Prefecture, number>;
+  selected?: Prefecture | "";
+  onSelect?: (prefecture: Prefecture | "") => void;
 };
 
-export function PrefectureSummary({ counts }: Props) {
+export function PrefectureSummary({ counts, selected, onSelect }: Props) {
   return (
     <ul
       className="prefecture-summary"
@@ -14,9 +16,15 @@ export function PrefectureSummary({ counts }: Props) {
       aria-label="都道府県別の件数（スクロールできます）"
     >
       {PREFECTURES.map((prefecture) => (
-        <li key={prefecture} className="prefecture-summary-item">
-          <span className="prefecture-summary-name">{prefecture}</span>
-          <span className="prefecture-summary-count">{counts[prefecture]}</span>
+        <li key={prefecture}>
+          <button
+            className={`prefecture-summary-item${selected === prefecture ? " prefecture-summary-item--active" : ""}`}
+            onClick={() => onSelect?.(selected === prefecture ? "" : prefecture)}
+            aria-pressed={selected === prefecture}
+          >
+            <span className="prefecture-summary-name">{prefecture}</span>
+            <span className="prefecture-summary-count">{counts[prefecture]}</span>
+          </button>
         </li>
       ))}
     </ul>

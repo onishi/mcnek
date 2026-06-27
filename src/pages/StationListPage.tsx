@@ -53,7 +53,11 @@ export function StationListPage() {
       <Link to="/visited" className="visited-stations-link">
         行った道の駅を見る
       </Link>
-      <PrefectureSummary counts={prefectureCounts} />
+      <PrefectureSummary
+        counts={prefectureCounts}
+        selected={prefecture}
+        onSelect={setPrefecture}
+      />
       <SearchFilter
         query={query}
         prefecture={prefecture}

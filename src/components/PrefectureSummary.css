@@ -19,6 +19,25 @@
   font-size: 0.8em;
   color: #555;
   background: #fafafa;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.prefecture-summary-item:hover {
+  background: #e8f0fe;
+  border-color: #4a90d9;
+  color: #1a5fa8;
+}
+
+.prefecture-summary-item--active {
+  background: #4a90d9;
+  border-color: #2a6fb8;
+  color: #fff;
+}
+
+.prefecture-summary-item--active .prefecture-summary-count {
+  color: #fff;
 }
 
 .prefecture-summary-count {
