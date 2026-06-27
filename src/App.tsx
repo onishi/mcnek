@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { StationListPage } from "./pages/StationListPage";
 import { StationDetailPage } from "./pages/StationDetailPage";
 import { VisitedStationsPage } from "./pages/VisitedStationsPage";
+import { MapPage } from "./pages/MapPage";
 import { PwaStatusBanner } from "./components/PwaStatusBanner";
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<StationListPage />} />
         <Route path="/stations/:id" element={<StationDetailPage />} />
         <Route path="/visited" element={<VisitedStationsPage />} />
+        <Route path="/map" element={<MapPage />} />
         <Route
           path="/data-check"
           element={

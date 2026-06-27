@@ -1,0 +1,48 @@
+.map-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: 0;
+}
+
+.map-page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.map-page-header h1 {
+  font-size: 1.1em;
+  margin: 0;
+}
+
+.map-page-count {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.map-page-back {
+  margin-left: auto;
+  font-size: 0.85em;
+}
+
+.map-container {
+  flex: 1;
+  width: 100%;
+}
+
+.map-popup-link {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 8px;
+  background: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85em;
+  cursor: pointer;
+}
