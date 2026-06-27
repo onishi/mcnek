@@ -5,14 +5,14 @@ import "./PrefectureSummary.css";
 
 type Props = {
   counts: Record<Prefecture, number>;
-  selected?: Prefecture | "";
-  onSelect?: (prefecture: Prefecture | "") => void;
-  filterRegion?: Region | "";
+  selected: Prefecture[];
+  onSelect: (prefecture: Prefecture) => void;
+  filterRegions?: Region[];
 };
 
-export function PrefectureSummary({ counts, selected, onSelect, filterRegion }: Props) {
-  const visiblePrefectures = filterRegion
-    ? PREFECTURES.filter((p) => getRegion(p) === filterRegion)
+export function PrefectureSummary({ counts, selected, onSelect, filterRegions }: Props) {
+  const visiblePrefectures = filterRegions?.length
+    ? PREFECTURES.filter((p) => filterRegions.includes(getRegion(p)))
     : PREFECTURES;
 
   return (
@@ -24,9 +24,9 @@ export function PrefectureSummary({ counts, selected, onSelect, filterRegion }: 
       {visiblePrefectures.map((prefecture) => (
         <li key={prefecture}>
           <button
-            className={`prefecture-summary-item${selected === prefecture ? " prefecture-summary-item--active" : ""}`}
-            onClick={() => onSelect?.(selected === prefecture ? "" : prefecture)}
-            aria-pressed={selected === prefecture}
+            className={`prefecture-summary-item${selected.includes(prefecture) ? " prefecture-summary-item--active" : ""}`}
+            onClick={() => onSelect(prefecture)}
+            aria-pressed={selected.includes(prefecture)}
           >
             <span className="prefecture-summary-name">{prefecture}</span>
             <span className="prefecture-summary-count">{counts[prefecture]}</span>

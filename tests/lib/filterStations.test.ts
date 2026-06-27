@@ -61,19 +61,29 @@ test("駅名検索の前後の空白は無視される", () => {
 });
 
 test("都道府県で絞り込める", () => {
-  const result = filterStations(stations, { prefecture: "北海道" });
+  const result = filterStations(stations, { prefectures: ["北海道"] });
   expect(result.map((s) => s.id)).toEqual(["b"]);
 });
 
+test("都道府県を複数選択して絞り込める", () => {
+  const result = filterStations(stations, { prefectures: ["北海道", "岩手県"] });
+  expect(result.map((s) => s.id)).toEqual(["b", "c"]);
+});
+
 test("地方で絞り込める", () => {
-  const result = filterStations(stations, { region: "東北地方" });
+  const result = filterStations(stations, { regions: ["東北地方"] });
   expect(result.map((s) => s.id)).toEqual(["c"]);
+});
+
+test("地方を複数選択して絞り込める", () => {
+  const result = filterStations(stations, { regions: ["北海道地方", "東北地方"] });
+  expect(result.map((s) => s.id)).toEqual(["b", "c"]);
 });
 
 test("複数条件を組み合わせて絞り込める", () => {
   const result = filterStations(stations, {
     query: "とようら",
-    prefecture: "北海道",
+    prefectures: ["北海道"],
   });
   expect(result.map((s) => s.id)).toEqual(["b"]);
 });
@@ -85,8 +95,8 @@ test("条件に一致しない場合は空配列を返す", () => {
 
 test("都道府県と地方が矛盾する場合は空配列を返す", () => {
   const result = filterStations(stations, {
-    prefecture: "北海道",
-    region: "東北地方",
+    prefectures: ["北海道"],
+    regions: ["東北地方"],
   });
   expect(result).toEqual([]);
 });

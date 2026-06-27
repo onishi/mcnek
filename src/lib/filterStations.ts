@@ -7,8 +7,8 @@ import type {
 
 export type StationFilter = {
   query?: string;
-  prefecture?: Prefecture;
-  region?: Region;
+  prefectures?: Prefecture[];
+  regions?: Region[];
 };
 
 export function filterStations(
@@ -21,10 +21,10 @@ export function filterStations(
     if (query && !station.name.includes(query)) {
       return false;
     }
-    if (filter.prefecture && station.prefecture !== filter.prefecture) {
+    if (filter.prefectures?.length && !filter.prefectures.includes(station.prefecture)) {
       return false;
     }
-    if (filter.region && getRegion(station.prefecture) !== filter.region) {
+    if (filter.regions?.length && !filter.regions.includes(getRegion(station.prefecture))) {
       return false;
     }
     return true;

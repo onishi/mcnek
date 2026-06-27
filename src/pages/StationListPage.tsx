@@ -18,12 +18,12 @@ const PAGE_SIZE = 30;
 
 export function StationListPage() {
   const [query, setQuery] = useState("");
-  const [prefecture, setPrefecture] = useState<Prefecture | "">("");
-  const [region, setRegion] = useState<Region | "">("");
+  const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
+  const [regions, setRegions] = useState<Region[]>([]);
   const [visitedOnly, setVisitedOnly] = useState(false);
   const [page, setPage] = useState(1);
 
-  const filterKey = `${query}|${prefecture}|${region}|${visitedOnly}`;
+  const filterKey = `${query}|${prefectures.join(",")}|${regions.join(",")}|${visitedOnly}`;
   const [lastFilterKey, setLastFilterKey] = useState(filterKey);
   if (filterKey !== lastFilterKey) {
     setLastFilterKey(filterKey);
@@ -45,11 +45,11 @@ export function StationListPage() {
   const filteredStations = useMemo(() => {
     const byFilter = filterStations(roadsideStations, {
       query,
-      prefecture: prefecture || undefined,
-      region: region || undefined,
+      prefectures: prefectures.length ? prefectures : undefined,
+      regions: regions.length ? regions : undefined,
     });
     return filterByVisited(byFilter, visitedStationIds, visitedOnly);
-  }, [query, prefecture, region, visitedOnly, visitedStationIds]);
+  }, [query, prefectures, regions, visitedOnly, visitedStationIds]);
 
   const totalPages = getTotalPages(filteredStations.length, PAGE_SIZE);
   const visibleStations = paginate(filteredStations, page, PAGE_SIZE);
@@ -62,26 +62,25 @@ export function StationListPage() {
       </Link>
       <RegionSummary
         counts={regionCounts}
-        selected={region}
+        selected={regions}
         onSelect={(r) => {
-          setRegion(r);
-          setPrefecture("");
+          setRegions((prev) =>
+            prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r],
+          );
+          setPrefectures([]);
         }}
       />
       <PrefectureSummary
         counts={prefectureCounts}
-        selected={prefecture}
-        onSelect={setPrefecture}
-        filterRegion={region}
+        selected={prefectures}
+        onSelect={(p) =>
+          setPrefectures((prev) =>
+            prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p],
+          )
+        }
+        filterRegions={regions}
       />
-      <SearchFilter
-        query={query}
-        prefecture={prefecture}
-        region={region}
-        onQueryChange={setQuery}
-        onPrefectureChange={setPrefecture}
-        onRegionChange={setRegion}
-      />
+      <SearchFilter query={query} onQueryChange={setQuery} />
       <label className="visited-only-filter">
         <input
           type="checkbox"
