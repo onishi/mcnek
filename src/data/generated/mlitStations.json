@@ -2679,8 +2679,8 @@
     "address": "岩手県久慈市",
     "registrationRound": 14,
     "registrationDate": "1998-04",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 40.143635,
+    "longitude": 141.571716,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/18938"
@@ -6264,8 +6264,8 @@
     "address": "埼玉県秩父郡小鹿野町",
     "registrationRound": 15,
     "registrationDate": "1999-08",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 36.015457,
+    "longitude": 138.925751,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/19114"
@@ -6584,8 +6584,8 @@
     "address": "千葉県柏市",
     "registrationRound": 16,
     "registrationDate": "2000-08",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 35.857937,
+    "longitude": 140.023636,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/19132"
@@ -7416,8 +7416,8 @@
     "address": "新潟県佐渡市",
     "registrationRound": 15,
     "registrationDate": "1999-08",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 38.085106,
+    "longitude": 138.435837,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/19223"
@@ -9224,8 +9224,8 @@
     "address": "長野県佐久市",
     "registrationRound": 14,
     "registrationDate": "1998-04",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 36.25761,
+    "longitude": 138.404327,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/19181"
@@ -15354,8 +15354,8 @@
     "address": "広島県安芸高田市",
     "registrationRound": 52,
     "registrationDate": "2020-03",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 34.655483,
+    "longitude": 132.669373,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/19952"
@@ -15370,8 +15370,8 @@
     "address": "広島県東広島市",
     "registrationRound": 56,
     "registrationDate": "2022-02",
-    "latitude": null,
-    "longitude": null,
+    "latitude": 34.434826,
+    "longitude": 132.728241,
     "mlitSourceUrl": "https://www.mlit.go.jp/road/Michi-no-Eki/list.html",
     "associationSourceUrls": [
       "https://www.michi-no-eki.jp/stations/views/21778"

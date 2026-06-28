@@ -16,7 +16,8 @@
     "import:michinoeki:fetch": "tsx src/import/fetchMichiNoEkiStations.ts",
     "import:michinoeki:merge": "tsx src/import/importMichiNoEkiAssociation.ts",
     "import:michinoeki:addresses": "tsx src/import/fetchMichiNoEkiAddresses.ts",
-    "import:geocode": "tsx src/import/geocodeStations.ts"
+    "import:geocode": "tsx src/import/geocodeStations.ts",
+    "import:geocode:retry": "tsx src/import/retryGeocode.ts"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.21",
