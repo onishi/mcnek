@@ -26,13 +26,13 @@ function parseAddress(html: string): string | null {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
-  // <th> に「所在地」が含まれる行の隣の <td> を取得
-  const ths = document.querySelectorAll("th");
-  for (const th of ths) {
-    if (th.textContent?.includes("所在地")) {
-      const td = th.nextElementSibling;
-      if (td?.tagName === "TD") {
-        const raw = td.textContent?.trim() ?? "";
+  // <dt>所在地</dt> の次の <dd> を取得
+  const dts = document.querySelectorAll("dt");
+  for (const dt of dts) {
+    if (dt.textContent?.trim() === "所在地") {
+      const dd = dt.nextElementSibling;
+      if (dd?.tagName === "DD") {
+        const raw = dd.textContent?.trim() ?? "";
         // 郵便番号 "NNN-NNNN " を除去
         return raw.replace(/^\d{3}-\d{4}\s*/, "").trim();
       }
