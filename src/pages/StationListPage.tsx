@@ -60,6 +60,9 @@ export function StationListPage() {
       <Link to="/visited" className="visited-stations-link">
         行った道の駅を見る
       </Link>
+      <Link to="/map" className="visited-stations-link">
+        地図で見る
+      </Link>
       <RegionSummary
         counts={regionCounts}
         selected={regions}

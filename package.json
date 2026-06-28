@@ -14,11 +14,16 @@
     "import:fetch": "tsx src/import/fetchMlitStations.ts",
     "import:mlit": "tsx src/import/importMlitStations.ts",
     "import:michinoeki:fetch": "tsx src/import/fetchMichiNoEkiStations.ts",
-    "import:michinoeki:merge": "tsx src/import/importMichiNoEkiAssociation.ts"
+    "import:michinoeki:merge": "tsx src/import/importMichiNoEkiAssociation.ts",
+    "import:michinoeki:addresses": "tsx src/import/fetchMichiNoEkiAddresses.ts",
+    "import:geocode": "tsx src/import/geocodeStations.ts"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.21",
+    "leaflet": "^1.9.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.18.0",
     "xlsx": "^0.18.5"
   },
