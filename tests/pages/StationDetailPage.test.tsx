@@ -46,10 +46,14 @@ test("国土交通省の参照リンクを表示する", () => {
   ).toHaveAttribute("href", station.mlitSourceUrl);
 });
 
-test("緯度経度が未登録の場合は位置情報に未登録と表示する", () => {
-  const station = roadsideStations[0];
+test("緯度経度がある場合は位置情報を表示する", () => {
+  const station = roadsideStations.find(
+    (s) => s.latitude !== null && s.longitude !== null,
+  )!;
   renderDetailPage(station.id);
-  expect(screen.getByText("未登録")).toBeInTheDocument();
+  expect(
+    screen.getByText(`${station.latitude}, ${station.longitude}`),
+  ).toBeInTheDocument();
 });
 
 test("連絡会の詳細URLがある場合はリンクを表示する", () => {
