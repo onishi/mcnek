@@ -32,6 +32,23 @@ npm run dev
 - `npm run format:check`: Prettier の整形チェックのみ行う（CI 向け）
 - `npm run build`: 型チェックと本番ビルドを実行する
 
+## 本番デプロイ（Cloudflare Pages）
+
+Cloudflare Pages の GitHub 連携によって、`main` ブランチへのプッシュで自動デプロイされる。
+
+初回セットアップ（Cloudflare ダッシュボードで 1 度だけ行う）:
+
+1. Cloudflare ダッシュボード → Workers & Pages → Create → Pages → Connect to Git
+2. `onishi/mcnek` を選択
+3. ビルド設定を以下のように入力:
+   - **Framework preset**: Vite
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+   - **Environment variable**: `NODE_VERSION = 22`
+4. Save and Deploy
+
+`public/_redirects` により、`/stations/:id` などのクライアントサイドルーティングがリロード後も正しく動作する。
+
 ## データ更新手順
 
 公式データを最新化するときは、以下を順番に実行する。
@@ -301,8 +318,8 @@ npm run import:geocode:retry          # 座標未取得の駅の住所を正規�
 
 ### 19. 公開・運用準備
 
-- [ ] 本番ホスティング先を決める（Vercel / Cloudflare Pages など）
-- [ ] CI で lint / test / build を自動実行する
+- [x] 本番ホスティング先を決める（Cloudflare Pages）
+- [x] CI で lint / test / build を自動実行する（`.github/workflows/ci.yml`）
 - [ ] 独自ドメインを用意する（任意）
 - [ ] 簡易的なアクセス解析を導入する（任意）
 - [ ] 障害時の切り戻し手順を決める
