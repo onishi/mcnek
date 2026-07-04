@@ -46,3 +46,18 @@
   font-size: 0.85em;
   cursor: pointer;
 }
+
+/* 訪問済みピン（オレンジの円形アイコン） */
+.map-marker-visited {
+  background: transparent;
+  border: none;
+}
+
+.map-marker-visited-inner {
+  width: 22px;
+  height: 22px;
+  background: #e07b00;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+}

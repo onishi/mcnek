@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { roadsideStations } from "../data/stations";
 import { hasCoordinates } from "../lib/coordinates";
+import { getVisitedStationIds } from "../lib/visitStorage";
 import "leaflet/dist/leaflet.css";
 import "./MapPage.css";
 
@@ -22,6 +23,14 @@ const defaultIcon = L.icon({
   shadowSize: [41, 41],
 });
 
+const visitedIcon = L.divIcon({
+  className: "map-marker-visited",
+  html: '<div class="map-marker-visited-inner"></div>',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+  popupAnchor: [0, -12],
+});
+
 export function MapPage() {
   const navigate = useNavigate();
 
@@ -29,6 +38,8 @@ export function MapPage() {
     () => roadsideStations.filter(hasCoordinates),
     [],
   );
+
+  const visitedStationIds = useMemo(() => new Set(getVisitedStationIds()), []);
 
   return (
     <div className="map-page">
@@ -43,11 +54,7 @@ export function MapPage() {
           一覧に戻る
         </Link>
       </div>
-      <MapContainer
-        center={[36.5, 137.0]}
-        zoom={5}
-        className="map-container"
-      >
+      <MapContainer center={[36.5, 137.0]} zoom={5} className="map-container">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -56,7 +63,7 @@ export function MapPage() {
           <Marker
             key={station.id}
             position={[station.latitude!, station.longitude!]}
-            icon={defaultIcon}
+            icon={visitedStationIds.has(station.id) ? visitedIcon : defaultIcon}
             eventHandlers={{
               click: () => navigate(`/stations/${station.id}`),
             }}

@@ -8,14 +8,20 @@ export const TileLayer = () => null;
 export const Marker = ({
   children,
   eventHandlers,
+  icon,
 }: {
   children?: React.ReactNode;
   eventHandlers?: Record<string, () => void>;
   position?: [number, number];
-  icon?: unknown;
+  icon?: { options?: { className?: string } };
 }) => {
   void eventHandlers;
-  return React.createElement("div", null, children);
+  const iconClass = icon?.options?.className;
+  return React.createElement(
+    "div",
+    iconClass ? { "data-icon-class": iconClass } : undefined,
+    children,
+  );
 };
 
 export const Popup = ({ children }: { children: React.ReactNode }) =>
