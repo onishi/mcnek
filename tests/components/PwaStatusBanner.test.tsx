@@ -22,7 +22,9 @@ test("オフライン時はオフラインである旨を表示する", () => {
   setOnline(false);
   render(<PwaStatusBanner />);
   expect(
-    screen.getByText("オフラインです。表示中のデータは最新でない可能性があります。"),
+    screen.getByText(
+      "オフラインです。表示中のデータは最新でない可能性があります。",
+    ),
   ).toBeInTheDocument();
 });
 
@@ -37,6 +39,8 @@ test("offlineイベントを受けてオフライン表示に切り替わる", (
   });
 
   expect(
-    screen.getByText("オフラインです。表示中のデータは最新でない可能性があります。"),
+    screen.getByText(
+      "オフラインです。表示中のデータは最新でない可能性があります。",
+    ),
   ).toBeInTheDocument();
 });

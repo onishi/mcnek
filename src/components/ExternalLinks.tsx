@@ -5,10 +5,7 @@ type Props = {
   associationSourceUrls: string[];
 };
 
-export function ExternalLinks({
-  mlitSourceUrl,
-  associationSourceUrls,
-}: Props) {
+export function ExternalLinks({ mlitSourceUrl, associationSourceUrls }: Props) {
   return (
     <ul className="external-links">
       <li>

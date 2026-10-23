@@ -16,7 +16,9 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function geocode(address: string): Promise<{ lat: number; lon: number } | null> {
+async function geocode(
+  address: string,
+): Promise<{ lat: number; lon: number } | null> {
   const url = `${GSI_API}?q=${encodeURIComponent(address)}`;
   const response = await fetch(url);
   if (!response.ok) throw new Error(`GSI API エラー: ${response.status}`);
@@ -36,7 +38,9 @@ async function main() {
   ) as MichiNoEkiAddress[];
 
   // stationPath → address のマップ
-  const addressByPath = new Map(addresses.map((a) => [a.stationPath, a.address]));
+  const addressByPath = new Map(
+    addresses.map((a) => [a.stationPath, a.address]),
+  );
 
   // associationSourceUrl から stationPath を取り出してマッチング
   const stationMap = new Map<string, RoadsideStation>();
@@ -82,7 +86,9 @@ async function main() {
     }
 
     i++;
-    process.stdout.write(`\r${i}/${addressByPath.size} 件処理済み（成功: ${success}, 未取得: ${notFound}, 失敗: ${failed}）`);
+    process.stdout.write(
+      `\r${i}/${addressByPath.size} 件処理済み（成功: ${success}, 未取得: ${notFound}, 失敗: ${failed}）`,
+    );
 
     if (i < addressByPath.size) await sleep(DELAY_MS);
   }
@@ -99,7 +105,9 @@ async function main() {
   await writeFile(STATIONS_PATH, `${JSON.stringify(result, null, 2)}\n`);
 
   const withCoords = result.filter((s) => s.latitude !== null).length;
-  console.log(`座標更新: ${updated.size} 件 / 全体 ${result.length} 件中 ${withCoords} 件が座標あり`);
+  console.log(
+    `座標更新: ${updated.size} 件 / 全体 ${result.length} 件中 ${withCoords} 件が座標あり`,
+  );
 }
 
 main().catch((error: unknown) => {

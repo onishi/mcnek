@@ -29,7 +29,10 @@ export function PwaStatusBanner() {
 
   if (needRefresh) {
     return (
-      <div className="pwa-status-banner pwa-status-banner--update" role="status">
+      <div
+        className="pwa-status-banner pwa-status-banner--update"
+        role="status"
+      >
         <span>新しいバージョンがあります。</span>
         <button type="button" onClick={() => updateServiceWorker(true)}>
           更新する
@@ -43,7 +46,10 @@ export function PwaStatusBanner() {
 
   if (isOffline) {
     return (
-      <div className="pwa-status-banner pwa-status-banner--offline" role="status">
+      <div
+        className="pwa-status-banner pwa-status-banner--offline"
+        role="status"
+      >
         オフラインです。表示中のデータは最新でない可能性があります。
       </div>
     );

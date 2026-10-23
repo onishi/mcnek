@@ -66,7 +66,9 @@ test("都道府県で絞り込める", () => {
 });
 
 test("都道府県を複数選択して絞り込める", () => {
-  const result = filterStations(stations, { prefectures: ["北海道", "岩手県"] });
+  const result = filterStations(stations, {
+    prefectures: ["北海道", "岩手県"],
+  });
   expect(result.map((s) => s.id)).toEqual(["b", "c"]);
 });
 
@@ -76,7 +78,9 @@ test("地方で絞り込める", () => {
 });
 
 test("地方を複数選択して絞り込める", () => {
-  const result = filterStations(stations, { regions: ["北海道地方", "東北地方"] });
+  const result = filterStations(stations, {
+    regions: ["北海道地方", "東北地方"],
+  });
   expect(result.map((s) => s.id)).toEqual(["b", "c"]);
 });
 

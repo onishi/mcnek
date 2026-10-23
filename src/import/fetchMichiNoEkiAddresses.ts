@@ -47,7 +47,9 @@ async function main() {
     await readFile(INPUT_PATH, "utf-8"),
   );
 
-  console.log(`${stations.length} 件の詳細ページを取得します（約 ${Math.ceil(stations.length / 60)} 分）`);
+  console.log(
+    `${stations.length} 件の詳細ページを取得します（約 ${Math.ceil(stations.length / 60)} 分）`,
+  );
 
   const results: MichiNoEkiAddress[] = [];
   let failed = 0;

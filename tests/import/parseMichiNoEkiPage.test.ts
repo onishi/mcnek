@@ -1,6 +1,8 @@
 import { parseMichiNoEkiPage } from "../../src/import/parseMichiNoEkiPage";
 
-function buildHtml(items: { href: string; name: string; location: string }[]): string {
+function buildHtml(
+  items: { href: string; name: string; location: string }[],
+): string {
   const lis = items
     .map(
       (item) => `
@@ -35,7 +37,11 @@ test("複数件を読み取り件数が一致する", () => {
   const html = buildHtml([
     { href: "/stations/views/18786", name: "三笠", location: "北海道 三笠市" },
     { href: "/stations/views/18787", name: "芦別", location: "北海道 芦別市" },
-    { href: "/stations/views/18788", name: "南ふらの", location: "北海道 南富良野町" },
+    {
+      href: "/stations/views/18788",
+      name: "南ふらの",
+      location: "北海道 南富良野町",
+    },
   ]);
 
   expect(parseMichiNoEkiPage(html)).toHaveLength(3);

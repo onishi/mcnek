@@ -35,10 +35,7 @@ export function StationListPage() {
     [],
   );
 
-  const regionCounts = useMemo(
-    () => countByRegion(roadsideStations),
-    [],
-  );
+  const regionCounts = useMemo(() => countByRegion(roadsideStations), []);
 
   const visitedStationIds = useMemo(() => new Set(getVisitedStationIds()), []);
 
