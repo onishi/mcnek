@@ -21,10 +21,16 @@ export function filterStations(
     if (query && !station.name.includes(query)) {
       return false;
     }
-    if (filter.prefectures?.length && !filter.prefectures.includes(station.prefecture)) {
+    if (
+      filter.prefectures?.length &&
+      !filter.prefectures.includes(station.prefecture)
+    ) {
       return false;
     }
-    if (filter.regions?.length && !filter.regions.includes(getRegion(station.prefecture))) {
+    if (
+      filter.regions?.length &&
+      !filter.regions.includes(getRegion(station.prefecture))
+    ) {
       return false;
     }
     return true;

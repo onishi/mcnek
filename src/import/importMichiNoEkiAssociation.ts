@@ -60,10 +60,7 @@ async function main() {
     );
   }
 
-  const { stations: autoMatched } = matchMichiNoEkiStations(
-    stations,
-    records,
-  );
+  const { stations: autoMatched } = matchMichiNoEkiStations(stations, records);
   const merged = applyManualMichiNoEkiLinks(autoMatched, manualLinks);
   const unmatchedStations = merged.filter(
     (station) => station.associationSourceUrls.length === 0,

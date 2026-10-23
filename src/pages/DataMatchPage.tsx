@@ -33,7 +33,8 @@ export function DataMatchPage() {
   );
 
   const ekiRecordByPath = useMemo(
-    () => new Map(michiNoEkiStations.map((record) => [record.stationPath, record])),
+    () =>
+      new Map(michiNoEkiStations.map((record) => [record.stationPath, record])),
     [],
   );
 
@@ -96,13 +97,14 @@ export function DataMatchPage() {
         {totalMatched} 件が一致（未一致 {totalCount - totalMatched} 件）
       </p>
       <p className="data-match-manual-controls">
-        手動紐付け {manualLinks.length} 件（チェックすると下の一覧にすぐ反映されます）
+        手動紐付け {manualLinks.length}{" "}
+        件（チェックすると下の一覧にすぐ反映されます）
         <button type="button" onClick={handleCopyManualLinks}>
           手動紐付けをJSONでコピー
         </button>
         <span className="data-match-manual-hint">
-          コピーした内容を data/manual/michiNoEkiManualLinks.json に保存し、
-          npm run import:michinoeki:merge を実行してください
+          コピーした内容を data/manual/michiNoEkiManualLinks.json に保存し、 npm
+          run import:michinoeki:merge を実行してください
         </span>
       </p>
 
@@ -112,9 +114,7 @@ export function DataMatchPage() {
           const matchedCount = group.rows.filter(
             (row) => row.mlitStation && row.michiNoEkiRecords.length > 0,
           ).length;
-          const unmatchedEkiRows = group.rows.filter(
-            (row) => !row.mlitStation,
-          );
+          const unmatchedEkiRows = group.rows.filter((row) => !row.mlitStation);
 
           return (
             <section key={group.prefecture} className="data-match-prefecture">
@@ -133,7 +133,7 @@ export function DataMatchPage() {
                     const isMatched =
                       row.mlitStation && row.michiNoEkiRecords.length > 0;
                     const manualPaths = row.mlitStation
-                      ? manualDrafts[row.mlitStation.id] ?? []
+                      ? (manualDrafts[row.mlitStation.id] ?? [])
                       : [];
 
                     // 連絡会データを手動で選ぶ候補: まだ誰にも紐付いていない駅 +

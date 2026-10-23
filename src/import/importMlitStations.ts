@@ -16,7 +16,9 @@ const IMPORT_META_PATH = "src/data/generated/importMeta.json";
 
 async function readPreviousStations(): Promise<RoadsideStation[]> {
   try {
-    return JSON.parse(await readFile(OUTPUT_PATH, "utf-8")) as RoadsideStation[];
+    return JSON.parse(
+      await readFile(OUTPUT_PATH, "utf-8"),
+    ) as RoadsideStation[];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       return [];

@@ -150,10 +150,7 @@ test("1つの国土交通省データに複数の連絡会データを紐付け�
     stationPath: "/stations/views/2",
   });
 
-  const groups = groupStationsByPrefecture(
-    [station],
-    [upRecord, downRecord],
-  );
+  const groups = groupStationsByPrefecture([station], [upRecord, downRecord]);
   const fukushima = groups.find((group) => group.prefecture === "福島県");
 
   expect(fukushima?.rows).toEqual([

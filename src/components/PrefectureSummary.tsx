@@ -10,7 +10,12 @@ type Props = {
   filterRegions?: Region[];
 };
 
-export function PrefectureSummary({ counts, selected, onSelect, filterRegions }: Props) {
+export function PrefectureSummary({
+  counts,
+  selected,
+  onSelect,
+  filterRegions,
+}: Props) {
   const visiblePrefectures = filterRegions?.length
     ? PREFECTURES.filter((p) => filterRegions.includes(getRegion(p)))
     : PREFECTURES;
@@ -29,7 +34,9 @@ export function PrefectureSummary({ counts, selected, onSelect, filterRegions }:
             aria-pressed={selected.includes(prefecture)}
           >
             <span className="prefecture-summary-name">{prefecture}</span>
-            <span className="prefecture-summary-count">{counts[prefecture]}</span>
+            <span className="prefecture-summary-count">
+              {counts[prefecture]}
+            </span>
           </button>
         </li>
       ))}

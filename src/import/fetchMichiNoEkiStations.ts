@@ -1,8 +1,10 @@
 import { mkdir, writeFile } from "node:fs/promises";
-import { parseMichiNoEkiPage, type MichiNoEkiRecord } from "./parseMichiNoEkiPage";
+import {
+  parseMichiNoEkiPage,
+  type MichiNoEkiRecord,
+} from "./parseMichiNoEkiPage";
 
-const BASE_URL =
-  "https://www.michi-no-eki.jp/stations/search/all/all/all";
+const BASE_URL = "https://www.michi-no-eki.jp/stations/search/all/all/all";
 const OUTPUT_PATH = "data/raw/michinoeki-stations.json";
 const DELAY_MS = 1000;
 
@@ -23,7 +25,10 @@ async function fetchPage(page: number): Promise<string> {
 
 function detectLastPage(html: string): number {
   // 「最後 »」リンクの page= 値を探す
-  const match = /\/stations\/search\/all\/all\/all\?page=(\d+)[^"]*"[^>]*>[^<]*»/.exec(html);
+  const match =
+    /\/stations\/search\/all\/all\/all\?page=(\d+)[^"]*"[^>]*>[^<]*»/.exec(
+      html,
+    );
   return match ? Number(match[1]) : 0;
 }
 

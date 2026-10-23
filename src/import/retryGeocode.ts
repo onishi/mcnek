@@ -16,7 +16,9 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function geocode(address: string): Promise<{ lat: number; lon: number } | null> {
+async function geocode(
+  address: string,
+): Promise<{ lat: number; lon: number } | null> {
   const url = `${GSI_API}?q=${encodeURIComponent(address)}`;
   const response = await fetch(url);
   if (!response.ok) throw new Error(`GSI API エラー: ${response.status}`);
@@ -39,7 +41,12 @@ function normalizeVariants(raw: string): string[] {
   // 3. 「郡」→「県」の修正 (例: 岩手郡 → 岩手県)
   const fixedKen = withoutZenPostal.replace(/^(\S{2})郡/, "$1県");
 
-  for (const candidate of [withoutZenPostal, withoutNoHyphenPostal, fixedKen, raw]) {
+  for (const candidate of [
+    withoutZenPostal,
+    withoutNoHyphenPostal,
+    fixedKen,
+    raw,
+  ]) {
     const trimmed = candidate.trim();
     if (trimmed && !variants.includes(trimmed)) {
       variants.push(trimmed);
@@ -58,7 +65,9 @@ async function main() {
     await readFile(ADDRESSES_PATH, "utf-8"),
   ) as MichiNoEkiAddress[];
 
-  const addressByPath = new Map(addresses.map((a) => [a.stationPath, a.address]));
+  const addressByPath = new Map(
+    addresses.map((a) => [a.stationPath, a.address]),
+  );
 
   const noCoords = stations.filter((s) => s.latitude === null);
   console.log(`座標未取得: ${noCoords.length} 件\n`);
@@ -86,7 +95,9 @@ async function main() {
         const coords = await geocode(address);
         if (coords) {
           updated.set(station.id, coords);
-          console.log(`✓ ${station.name}: "${address}" → ${coords.lat}, ${coords.lon}`);
+          console.log(
+            `✓ ${station.name}: "${address}" → ${coords.lat}, ${coords.lon}`,
+          );
           found = true;
           break;
         } else {
@@ -98,7 +109,9 @@ async function main() {
     }
 
     if (!found) {
-      console.log(`✗ ${station.name}: すべての候補で取得できず（元の住所: "${rawAddress}"）`);
+      console.log(
+        `✗ ${station.name}: すべての候補で取得できず（元の住所: "${rawAddress}"）`,
+      );
     }
   }
 
@@ -114,7 +127,9 @@ async function main() {
 
   await writeFile(STATIONS_PATH, `${JSON.stringify(result, null, 2)}\n`);
   const total = result.filter((s) => s.latitude !== null).length;
-  console.log(`\n${updated.size} 件更新 → 合計 ${total}/${result.length} 件が座標あり`);
+  console.log(
+    `\n${updated.size} 件更新 → 合計 ${total}/${result.length} 件が座標あり`,
+  );
 }
 
 main().catch((error: unknown) => {

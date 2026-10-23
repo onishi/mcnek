@@ -44,7 +44,7 @@ Cloudflare Pages の GitHub 連携によって、`main` ブランチへのプッ
    - **Framework preset**: Vite
    - **Build command**: `npm run build`
    - **Build output directory**: `dist`
-   - **Environment variable**: `NODE_VERSION = 22`
+   - **Environment variable**: `NODE_VERSION = 24`（リポジトリの `.node-version` と揃える）
 4. Save and Deploy
 
 `public/_redirects` により、`/stations/:id` などのクライアントサイドルーティングがリロード後も正しく動作する。

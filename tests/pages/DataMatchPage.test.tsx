@@ -5,7 +5,9 @@ import type { MichiNoEkiRecord } from "../../src/import/parseMichiNoEkiPage";
 import { DataMatchPage } from "../../src/pages/DataMatchPage";
 import { getAllManualLinkDrafts } from "../../src/lib/manualLinkDraft";
 
-function buildStation(overrides: Partial<RoadsideStation> = {}): RoadsideStation {
+function buildStation(
+  overrides: Partial<RoadsideStation> = {},
+): RoadsideStation {
   return {
     id: "matched-1",
     name: "一致駅",
@@ -123,9 +125,7 @@ test("紐付けできなかった国土交通省データの駅は片側だけ�
 
 test("紐付けできなかった連絡会データは片側だけの行として表示される", () => {
   renderDataMatchPage();
-  const row = findRowByHref(
-    "https://www.michi-no-eki.jp/stations/views/2",
-  );
+  const row = findRowByHref("https://www.michi-no-eki.jp/stations/views/2");
   expect(row).toHaveClass("data-match-overflow-row");
 });
 

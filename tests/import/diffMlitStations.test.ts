@@ -1,7 +1,9 @@
 import { diffMlitStations } from "../../src/import/diffMlitStations";
 import type { RoadsideStation } from "../../src/types/roadsideStation";
 
-function buildStation(overrides: Partial<RoadsideStation> = {}): RoadsideStation {
+function buildStation(
+  overrides: Partial<RoadsideStation> = {},
+): RoadsideStation {
   return {
     id: "base-id",
     name: "川場田園プラザ",
@@ -112,10 +114,7 @@ test("登録回・市区町村が重複する場合でも名前が一致する�
   const currentA = buildStation({ id: "a2", name: "A駅" });
   const currentB = buildStation({ id: "b2", name: "B駅改名" });
 
-  const diff = diffMlitStations(
-    [previousA, previousB],
-    [currentA, currentB],
-  );
+  const diff = diffMlitStations([previousA, previousB], [currentA, currentB]);
 
   // A駅は名前一致で突き合わされ変更なし、B駅は残りのB駅(旧)と突き合わされ名称変更
   expect(diff.renamed).toEqual([
